@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LearnX AI | Faculty Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;800&amp;family=Inter:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+          tailwind.config = {
+            darkMode: "class",
+            theme: {
+              extend: {
+                colors: {
+                  "primary-fixed": "#dee0ff",
+                  "surface-container-low": "#1a1c20",
+                  "secondary-fixed": "#ffd7f1",
+                  "on-background": "#e2e2e8",
+                  "inverse-on-surface": "#2f3035",
+                  "on-error": "#690005",
+                  "inverse-surface": "#e2e2e8",
+                  "surface-bright": "#37393e",
+                  "on-tertiary-fixed-variant": "#004f58",
+                  "primary-container": "#1032cf",
+                  "primary-fixed-dim": "#bbc3ff",
+                  "surface-dim": "#111318",
+                  "on-tertiary": "#00363d",
+                  "on-surface-variant": "#c5c5d8",
+                  "on-primary-fixed": "#000e5e",
+                  "tertiary": "#00daf3",
+                  "outline-variant": "#444655",
+                  "outline": "#8f8fa1",
+                  "on-secondary-container": "#fff0f7",
+                  "surface-container-lowest": "#0c0e12",
+                  "secondary-fixed-dim": "#fface9",
+                  "on-secondary-fixed-variant": "#840077",
+                  "surface-container-high": "#282a2e",
+                  "secondary-container": "#ca04b7",
+                  "on-secondary": "#5d0054",
+                  "on-primary-container": "#abb6ff",
+                  "on-primary": "#001c94",
+                  "surface-tint": "#bbc3ff",
+                  "tertiary-container": "#00525c",
+                  "on-surface": "#e2e2e8",
+                  "error-container": "#93000a",
+                  "on-tertiary-container": "#00cce4",
+                  "on-error-container": "#ffdad6",
+                  "surface": "#111318",
+                  "on-primary-fixed-variant": "#052dcc",
+                  "error": "#ffb4ab",
+                  "surface-variant": "#333539",
+                  "primary": "#bbc3ff",
+                  "inverse-primary": "#314be3",
+                  "surface-container-highest": "#333539",
+                  "secondary": "#fface9",
+                  "on-secondary-fixed": "#3a0033",
+                  "tertiary-fixed": "#9cf0ff",
+                  "on-tertiary-fixed": "#001f24",
+                  "surface-container": "#1e2024",
+                  "background": "#111318",
+                  "tertiary-fixed-dim": "#00daf3"
+                },
+                fontFamily: {
+                  "headline": ["Manrope"],
+                  "body": ["Inter"],
+                  "label": ["Inter"]
+                },
+                borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+              },
+            },
+          }
+        </script>
+    <style>
+        .glass-card {
+            background: rgba(30, 32, 36, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .glow-card-primary:hover {
+            box-shadow: 0 0 50px -10px rgba(16, 50, 207, 0.3);
+            border-color: rgba(16, 50, 207, 0.4);
+            transform: translateY(-4px);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #bbc3ff 0%, #314be3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .sidebar-active {
+            background: linear-gradient(90deg, rgba(171, 182, 255, 0.1) 0%, transparent 100%);
+            border-left: 2px solid #bbc3ff;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-white overflow-x-hidden">
+<div class="flex min-h-screen">
+<aside class="fixed left-0 top-0 h-full flex flex-col p-6 bg-surface-container-lowest/80 backdrop-blur-3xl w-72 border-r border-white/5 z-50">
+    <div class="mb-12 px-2">
+        <h1 class="text-2xl font-black tracking-tighter text-white font-headline">LearnX AI</h1>
+        <p class="text-[10px] uppercase tracking-[0.3em] text-primary font-black mt-1">Faculty Portal</p>
+    </div>
+    <nav class="flex-1 space-y-3">
+        <!-- Active Link -->
+        <a class="flex items-center gap-4 px-4 py-3 text-white sidebar-active rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+            <span>Dashboard</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">add_circle</span>
+            <span>Creation Hub</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">folder</span>
+            <span>My Materials</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">quiz</span>
+            <span>Quiz Library</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">group</span>
+            <span>Students</span>
+        </a>
+    </nav>
+    <div class="mt-auto pt-8 border-t border-white/5 space-y-4">
+        <a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant/60 hover:text-white font-headline text-xs font-bold transition-all" href="#">
+            <span class="material-symbols-outlined text-xl">logout</span>
+            <span>Logout</span>
+        </a>
+        <div class="flex items-center gap-4 glass-card p-4 rounded-xl">
+            <img alt="Faculty Avatar" class="w-10 h-10 rounded-lg border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEmbUOPtePundjXnuR1pJIj6ExioXmhx85sqkHkJs3nTEW1ex5Ov4D0jGbaBD0uh5V060rsuKnncA2tiqzPrToG0Ulyf49Gy0bZy5Y83kyoPLaJ5W-70JwYy_gE-NWYyf382ScCK9rdWAN24LXpq100v_VOK3lBNpGKFmmE6Q803LtAMtmboHOulKjHfy_Sj1EOhtelU4BT9OA48iKFP467jZ5DhYt2anJ1IQYDkKCvnBG5fQi7daod4dLQzJbq4hqd5sdwklB7i8"/>
+            <div class="overflow-hidden">
+                <p class="text-xs font-black text-white truncate uppercase tracking-tighter">Dr. Elena Vance</p>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                    <p class="text-[9px] font-black text-primary uppercase tracking-widest">Senior Faculty</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-72 flex-1 flex flex-col min-w-0">
+    <!-- TopNavBar -->
+    <header class="sticky top-0 z-50 w-full h-20 bg-surface-container-lowest/40 backdrop-blur-3xl flex justify-between items-center px-10 border-b border-white/5 shadow-sm">
+        <div class="flex items-center flex-1">
+            <div class="relative w-full max-w-md">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg">search</span>
+                <input class="w-full bg-surface-container-highest/30 border border-white/5 rounded-xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-slate-600 font-bold tracking-tight" placeholder="Search academic resources..." type="text"/>
+            </div>
+        </div>
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-6 text-on-surface-variant/60">
+                <button class="hover:text-primary transition-all relative group">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full border-2 border-background animate-pulse"></span>
+                </button>
+                <button class="hover:text-primary transition-all relative group">
+                    <span class="material-symbols-outlined">psychology</span>
+                </button>
+            </div>
+            <div class="h-8 w-[1px] bg-white/5"></div>
+            <div class="flex items-center gap-4 group cursor-pointer bg-white/5 px-4 py-2 rounded-xl border border-white/5 hover:border-primary/20 transition-all">
+                <div class="text-right">
+                    <p class="text-white font-black text-sm tracking-tighter leading-none">Dr. Elena Vance</p>
+                    <p class="text-[9px] text-primary font-black uppercase tracking-widest mt-1">Senior Faculty</p>
+                </div>
+                <img alt="Faculty Avatar" class="w-10 h-10 rounded-lg border border-white/10 group-hover:border-primary/40 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEmbUOPtePundjXnuR1pJIj6ExioXmhx85sqkHkJs3nTEW1ex5Ov4D0jGbaBD0uh5V060rsuKnncA2tiqzPrToG0Ulyf49Gy0bZy5Y83kyoPLaJ5W-70JwYy_gE-NWYyf382ScCK9rdWAN24LXpq100v_VOK3lBNpGKFmmE6Q803LtAMtmboHOulKjHfy_Sj1EOhtelU4BT9OA48iKFP467jZ5DhYt2anJ1IQYDkKCvnBG5fQi7daod4dLQzJbq4hqd5sdwklB7i8"/>
+            </div>
+        </div>
+    </header>
+<!-- Dashboard Content -->
+<div class="p-10 md:p-14 space-y-12 reveal">
+    <!-- Faculty Overview Header -->
+    <section class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+        <div>
+            <div class="inline-block px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-4">Faculty Intelligence Suite</div>
+            <h2 class="text-5xl font-black font-headline text-white tracking-tighter">Faculty <span class="text-gradient-primary">Control</span></h2>
+            <p class="text-on-surface-variant mt-4 text-xl font-medium opacity-70">Welcome back, Elena. Your curriculum automation is <span class="text-primary font-black uppercase tracking-widest text-sm">Active & Optimized</span>.</p>
+        </div>
+        <div class="flex gap-4">
+            <button class="px-8 py-4 glass-card text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-white/5 transition-all">Export Report</button>
+            <button class="px-8 py-4 bg-gradient-to-r from-primary-container to-secondary-container text-white font-black text-xs uppercase tracking-widest rounded-xl shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all flex items-center gap-2">
+                Launch AI Audit
+                <span class="material-symbols-outlined text-sm">bolt</span>
+            </button>
+        </div>
+    </section>
+<!-- High-Impact Glassmorphic Stats Cards -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal" style="transition-delay: 100ms;">
+    <!-- Stats Card 1 -->
+    <div class="glass-card p-10 rounded-2xl border-white/5 flex flex-col justify-between h-56 glow-card-primary relative group overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 blur-[80px] rounded-full"></div>
+        <div class="flex justify-between items-start relative z-10">
+            <div class="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary">cloud_upload</span>
+            </div>
+            <span class="text-[10px] font-black text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-full uppercase tracking-widest">+8 Assets</span>
+        </div>
+        <div class="relative z-10">
+            <h3 class="text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Intelligence Materials</h3>
+            <p class="text-5xl font-black text-white font-headline tracking-tighter mt-2">142</p>
+        </div>
+    </div>
+    <!-- Stats Card 2 -->
+    <div class="glass-card p-10 rounded-2xl border-white/5 flex flex-col justify-between h-56 glow-card-primary relative group overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-secondary/5 blur-[80px] rounded-full"></div>
+        <div class="flex justify-between items-start relative z-10">
+            <div class="w-12 h-12 rounded-xl bg-secondary/10 border border-secondary/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-secondary">group</span>
+            </div>
+            <span class="text-[10px] font-black text-secondary bg-secondary/10 border border-secondary/20 px-3 py-1 rounded-full uppercase tracking-widest">Live Now</span>
+        </div>
+        <div class="relative z-10">
+            <h3 class="text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Active Students</h3>
+            <p class="text-5xl font-black text-white font-headline tracking-tighter mt-2">1.2k</p>
+        </div>
+    </div>
+    <!-- Stats Card 3 -->
+    <div class="glass-card p-10 rounded-2xl border-white/5 flex flex-col justify-between h-56 glow-card-primary relative group overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-tertiary/5 blur-[80px] rounded-full"></div>
+        <div class="flex justify-between items-start relative z-10">
+            <div class="w-12 h-12 rounded-xl bg-tertiary/10 border border-tertiary/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-tertiary">quiz</span>
+            </div>
+            <span class="text-[10px] font-black text-tertiary bg-tertiary/10 border border-tertiary/20 px-3 py-1 rounded-full uppercase tracking-widest">94% Comp.</span>
+        </div>
+        <div class="relative z-10">
+            <h3 class="text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Automated Quizzes</h3>
+            <p class="text-5xl font-black text-white font-headline tracking-tighter mt-2">48</p>
+        </div>
+    </div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+<!-- Recent Uploads Section (Bento Style) -->
+<section class="lg:col-span-2 space-y-6">
+<div class="flex justify-between items-center">
+<h3 class="text-2xl font-headline font-bold text-white">Recent Uploads</h3>
+<button class="text-indigo-400 font-semibold text-sm hover:text-indigo-300 transition-colors">View All Resources</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Resource Card 1 -->
+<div class="bg-surface-container-low p-6 rounded-lg hover:bg-surface-container transition-all group border border-transparent hover:border-outline-variant/20">
+<div class="flex gap-4 items-start">
+<div class="w-12 h-14 bg-slate-900 rounded-lg flex flex-col items-center justify-center border border-slate-800">
+<span class="material-symbols-outlined text-red-400">picture_as_pdf</span>
+<span class="text-[8px] font-bold text-slate-500 uppercase mt-1">PDF</span>
+</div>
+<div class="flex-1">
+<h4 class="text-white font-semibold group-hover:text-indigo-400 transition-colors">Advanced Neural Networks.pdf</h4>
+<p class="text-slate-500 text-xs mt-1">Uploaded Oct 24, 2023 • 4.2 MB</p>
+<div class="flex gap-2 mt-3">
+<span class="px-2 py-1 bg-surface-container-highest text-[10px] rounded text-on-surface-variant">Machine Learning</span>
+<span class="px-2 py-1 bg-surface-container-highest text-[10px] rounded text-on-surface-variant">Week 12</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Resource Card 2 -->
+<div class="bg-surface-container-low p-6 rounded-lg hover:bg-surface-container transition-all group border border-transparent hover:border-outline-variant/20">
+<div class="flex gap-4 items-start">
+<div class="w-12 h-14 bg-slate-900 rounded-lg flex flex-col items-center justify-center border border-slate-800">
+<span class="material-symbols-outlined text-blue-400">description</span>
+<span class="text-[8px] font-bold text-slate-500 uppercase mt-1">DOCX</span>
+</div>
+<div class="flex-1">
+<h4 class="text-white font-semibold group-hover:text-indigo-400 transition-colors">Course Syllabus - Semester 2.docx</h4>
+<p class="text-slate-500 text-xs mt-1">Uploaded Oct 22, 2023 • 1.1 MB</p>
+<div class="flex gap-2 mt-3">
+<span class="px-2 py-1 bg-surface-container-highest text-[10px] rounded text-on-surface-variant">General</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Resource Card 3 -->
+<div class="bg-surface-container-low p-6 rounded-lg hover:bg-surface-container transition-all group border border-transparent hover:border-outline-variant/20">
+<div class="flex gap-4 items-start">
+<div class="w-12 h-14 bg-slate-900 rounded-lg flex flex-col items-center justify-center border border-slate-800">
+<span class="material-symbols-outlined text-amber-400">slideshow</span>
+<span class="text-[8px] font-bold text-slate-500 uppercase mt-1">PPTX</span>
+</div>
+<div class="flex-1">
+<h4 class="text-white font-semibold group-hover:text-indigo-400 transition-colors">Introduction to Ethics.pptx</h4>
+<p class="text-slate-500 text-xs mt-1">Uploaded Oct 20, 2023 • 12.5 MB</p>
+<div class="flex gap-2 mt-3">
+<span class="px-2 py-1 bg-surface-container-highest text-[10px] rounded text-on-surface-variant">Philosophy</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Resource Card 4 -->
+<div class="bg-surface-container-low p-6 rounded-lg hover:bg-surface-container transition-all group border border-transparent hover:border-outline-variant/20">
+<div class="flex gap-4 items-start">
+<div class="w-12 h-14 bg-slate-900 rounded-lg flex flex-col items-center justify-center border border-slate-800">
+<span class="material-symbols-outlined text-emerald-400">table_chart</span>
+<span class="text-[8px] font-bold text-slate-500 uppercase mt-1">CSV</span>
+</div>
+<div class="flex-1">
+<h4 class="text-white font-semibold group-hover:text-indigo-400 transition-colors">Student Grades Matrix.csv</h4>
+<p class="text-slate-500 text-xs mt-1">Uploaded Oct 18, 2023 • 800 KB</p>
+<div class="flex gap-2 mt-3">
+<span class="px-2 py-1 bg-surface-container-highest text-[10px] rounded text-on-surface-variant">Admin</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Student Activity Section -->
+<section class="space-y-6">
+<div class="flex justify-between items-center">
+<h3 class="text-2xl font-headline font-bold text-white">Live Activity</h3>
+<span class="flex items-center gap-2">
+<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+<span class="text-xs text-slate-400 font-bold uppercase">Real-time</span>
+</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-6 space-y-8">
+<!-- Activity Item 1 -->
+<div class="flex gap-4 items-center">
+<div class="relative">
+<img alt="Student" class="w-10 h-10 rounded-full" data-alt="close-up portrait of a male university student in a library with glasses and a friendly expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkOTm7MkY0jkjnwFHgpqAvjemUzlfKmg-gEG90E-ywECnhI9NQSOG6uBhUfd8SDG-_EYpNRr4GaomFXI7SY7KOUNrqOnLfawBTRb3RQLd9wJwx_swezpCyIZ5q6MgCnEY_sQ4B9-HPJQi9tOLK0fi28L25KibhbVNy2Rf9iq9N3TThxXnawpp2EWEOvDxIJz2ExE4s4WxdgneeYW7P0KMVJepTTDn8-YRnPcwZv9tx8h2mKaSOOtWLwwaoLI4te0HOjwoFns-5bAM"/>
+<div class="absolute -bottom-1 -right-1 w-5 h-5 bg-tertiary rounded-full flex items-center justify-center border-2 border-surface-container-low">
+<span class="material-symbols-outlined text-[10px] text-on-tertiary" style="font-variation-settings: 'FILL' 1;">done_all</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-on-surface text-sm font-medium truncate"><span class="font-bold">Marcus Chen</span> completed Quiz #4</p>
+<p class="text-slate-500 text-xs mt-0.5">Scored 92% • 2 mins ago</p>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex gap-4 items-center">
+<div class="relative">
+<img alt="Student" class="w-10 h-10 rounded-full" data-alt="professional portrait of a young woman with curly hair against a dark minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7ROqJSjB8lExslSrOQCG3ecAy_gSkX3uNP4vJdvP9yiMvWb2XDpe1Jxx-J-5Uo_4RDz9wbjrep4exeWvYZM4ECuz6-HI04vPlq6rofPZmLzRWhOGxxswxVnz33AnjtfSNhf7Yj0d0jdw90k9So9xbu7V2RKUaoDOHo3ZCqp3ZS-p6EM7cGEODPH9fRk3YPhR3Y5DNHATTbElW77HRIIZRNTt8RiuJ4cM9J84gvdNYV2oQKwD1H3gi8ipA9K6CRg1emnQRkP5m1XA"/>
+<div class="absolute -bottom-1 -right-1 w-5 h-5 bg-indigo-500 rounded-full flex items-center justify-center border-2 border-surface-container-low">
+<span class="material-symbols-outlined text-[10px] text-white" style="font-variation-settings: 'FILL' 1;">cloud_download</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-on-surface text-sm font-medium truncate"><span class="font-bold">Sarah Jenkins</span> downloaded Handout</p>
+<p class="text-slate-500 text-xs mt-0.5">Linear Algebra Review • 15 mins ago</p>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex gap-4 items-center">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500">person</span>
+</div>
+<div class="absolute -bottom-1 -right-1 w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center border-2 border-surface-container-low">
+<span class="material-symbols-outlined text-[10px] text-white" style="font-variation-settings: 'FILL' 1;">forum</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-on-surface text-sm font-medium truncate"><span class="font-bold">Anonymous Student</span> posted in AI Ethics</p>
+<p class="text-slate-500 text-xs mt-0.5">Awaiting faculty reply • 1 hr ago</p>
+</div>
+</div>
+<!-- Simplified Activity Chart (Mockup) -->
+<div class="pt-4 border-t border-slate-800/50">
+<p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Weekly Engagement</p>
+<div class="flex items-end justify-between gap-1 h-24">
+<div class="w-full bg-slate-800 rounded-t-sm h-[30%]"></div>
+<div class="w-full bg-slate-800 rounded-t-sm h-[45%]"></div>
+<div class="w-full bg-slate-800 rounded-t-sm h-[60%]"></div>
+<div class="w-full bg-slate-800 rounded-t-sm h-[40%]"></div>
+<div class="w-full bg-gradient-to-t from-indigo-500 to-fuchsia-500 rounded-t-sm h-[85%]"></div>
+<div class="w-full bg-indigo-500/50 rounded-t-sm h-[70%]"></div>
+<div class="w-full bg-indigo-500/20 rounded-t-sm h-[50%]"></div>
+</div>
+<div class="flex justify-between text-[8px] text-slate-600 mt-2 font-bold uppercase">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Course Progress Tracker / Bottom Section -->
+<section class="bg-surface-container-low/60 border border-white/5 rounded-lg p-8">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-6">
+<div class="relative w-24 h-24 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90">
+<circle class="text-slate-800" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle cx="48" cy="48" fill="transparent" r="40" stroke="url(#gradient)" stroke-dasharray="251.2" stroke-dashoffset="60" stroke-linecap="round" stroke-width="8"></circle>
+<defs>
+<lineargradient id="gradient" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#1032cf"></stop>
+<stop offset="100%" stop-color="#00daf3"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-xl font-bold text-white">76%</span>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-bold text-white">Curriculum Automation</h3>
+<p class="text-on-surface-variant text-sm mt-1">LearnX AI is generating content for your next module: <br/><span class="font-semibold text-tertiary">Natural Language Processing</span></p>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 rounded-full border border-outline-variant/30 text-white font-semibold hover:bg-white/5 transition-all">Review Draft</button>
+<button class="px-6 py-3 rounded-full bg-tertiary-container text-on-tertiary-container font-bold hover:brightness-110 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">auto_awesome</span>
+                                Approve AI Content
+                            </button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

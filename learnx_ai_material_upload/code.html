@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LearnX AI - Premium Material Upload</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#1e2024",
+                        "inverse-on-surface": "#2f3035",
+                        "tertiary-fixed-dim": "#00daf3",
+                        "on-secondary": "#5d0054",
+                        "error": "#ffb4ab",
+                        "primary-container": "#1032cf",
+                        "surface-dim": "#111318",
+                        "error-container": "#93000a",
+                        "secondary-container": "#ca04b7",
+                        "inverse-primary": "#314be3",
+                        "on-tertiary-fixed": "#001f24",
+                        "inverse-surface": "#e2e2e8",
+                        "secondary-fixed": "#ffd7f1",
+                        "on-tertiary": "#00363d",
+                        "surface-container-low": "#1a1c20",
+                        "on-secondary-fixed": "#3a0033",
+                        "on-primary-fixed-variant": "#052dcc",
+                        "on-surface": "#e2e2e8",
+                        "tertiary-fixed": "#9cf0ff",
+                        "secondary-fixed-dim": "#fface9",
+                        "primary-fixed-dim": "#bbc3ff",
+                        "on-secondary-container": "#fff0f7",
+                        "surface-container-high": "#282a2e",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#000e5e",
+                        "surface-variant": "#333539",
+                        "surface-container-lowest": "#0c0e12",
+                        "on-surface-variant": "#c5c5d8",
+                        "on-primary": "#001c94",
+                        "on-primary-container": "#abb6ff",
+                        "secondary": "#fface9",
+                        "background": "#111318",
+                        "surface-container-highest": "#333539",
+                        "on-tertiary-fixed-variant": "#004f58",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#00daf3",
+                        "surface": "#111318",
+                        "primary-fixed": "#dee0ff",
+                        "on-tertiary-container": "#00cce4",
+                        "surface-bright": "#37393e",
+                        "outline": "#8f8fa1",
+                        "on-background": "#e2e2e8",
+                        "primary": "#bbc3ff",
+                        "tertiary-container": "#00525c",
+                        "surface-tint": "#bbc3ff",
+                        "on-secondary-fixed-variant": "#840077",
+                        "outline-variant": "#444655"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(30, 32, 36, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .glow-card-primary:hover {
+            box-shadow: 0 0 50px -10px rgba(16, 50, 207, 0.3);
+            border-color: rgba(16, 50, 207, 0.4);
+            transform: translateY(-4px);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #bbc3ff 0%, #314be3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .sidebar-active {
+            background: linear-gradient(90deg, rgba(171, 182, 255, 0.1) 0%, transparent 100%);
+            border-left: 2px solid #bbc3ff;
+        }
+        .upload-dashed-border {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='24' ry='24' stroke='%23314be3' stroke-width='2' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            border-radius: 1.5rem;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-white">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-72 h-20 bg-surface-container-lowest/40 backdrop-blur-3xl flex justify-between items-center px-10 border-b border-white/5 z-50 transition-all">
+    <div class="flex items-center gap-4">
+        <h2 class="text-lg font-black text-white tracking-tighter uppercase tracking-widest">Document <span class="text-gradient-primary">Nexus</span></h2>
+    </div>
+    <div class="flex items-center gap-8">
+        <div class="hidden md:flex items-center relative w-96 group">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg group-focus-within:text-primary transition-colors">search</span>
+            <input class="w-full bg-white/5 border border-white/5 focus:border-primary/20 rounded-xl py-2.5 pl-12 pr-4 text-sm focus:ring-4 focus:ring-primary/5 transition-all placeholder:text-slate-600 font-bold tracking-tight text-white" placeholder="Search knowledge node..." type="text"/>
+        </div>
+        <div class="flex items-center gap-6 text-on-surface-variant/60">
+            <button class="hover:text-primary transition-all relative">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full border-2 border-background animate-pulse"></span>
+            </button>
+            <button class="hover:text-primary transition-all">
+                <span class="material-symbols-outlined">psychology</span>
+            </button>
+        </div>
+    </div>
+</header>
+<div class="flex pt-20 h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-6 bg-surface-container-lowest/80 backdrop-blur-3xl w-72 border-r border-white/5 z-50">
+    <div class="mb-12 px-2">
+        <h1 class="text-2xl font-black tracking-tighter text-white font-headline">LearnX AI</h1>
+        <p class="text-[10px] uppercase tracking-[0.3em] text-primary font-black mt-1">Material Nexus</p>
+    </div>
+    <nav class="flex-1 space-y-3">
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">dashboard</span>
+            <span>Dashboard</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-white sidebar-active rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">cloud_upload</span>
+            <span>Document Upload</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">folder_managed</span>
+            <span>File Repository</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">quiz</span>
+            <span>My Quizzes</span>
+        </a>
+    </nav>
+    <div class="mt-auto pt-8 border-t border-white/5 space-y-4">
+        <a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant/60 hover:text-white font-headline text-xs font-bold transition-all" href="#">
+            <span class="material-symbols-outlined text-xl">settings</span>
+            <span>Preferences</span>
+        </a>
+        <div class="flex items-center gap-4 glass-card p-4 rounded-xl">
+            <img alt="User Avatar" class="w-10 h-10 rounded-lg border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiIVTtQSLFOirII2gq3WGI98eWadqATgY_LKKWNoYLiz2q1MgfIp1F7ESnM0Hju-DTZFN_jKEm6uloGqiQ18f1LBV8AHL2k1PEgza9wuVry9tmnl4l0qDCpvhxNxpFqoiBtj07jkM3ruuj28sEdxaqiwRGqYjuS3mewZLatuUWweEJASdseqE1VsakosEtOoEpBI92Yz3dwwp5AsNZm3CxqtQsMAfZzILEj_YBjXPlStd-PMTsLUDawX-q6NORzt1UP4kslXtaOmE"/>
+            <div class="overflow-hidden">
+                <p class="text-xs font-black text-white truncate uppercase tracking-tighter">Academic User</p>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                    <p class="text-[9px] font-black text-primary uppercase tracking-widest">Active Link</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-72 p-10 md:p-14 overflow-y-auto reveal">
+    <div class="max-w-6xl mx-auto pt-10">
+        <!-- Page Header -->
+        <div class="mb-16 border-b border-white/5 pb-12">
+            <div class="inline-block px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-4">Intelligence Ingestion</div>
+            <h1 class="text-6xl font-black text-white font-headline tracking-tighter mb-6">Nexus <span class="text-gradient-primary">Uploader</span></h1>
+            <p class="text-on-surface-variant text-xl max-w-2xl leading-relaxed font-medium opacity-70">
+                Transform your lecture notes and academic data into high-output AI-powered learning modules. Fuel the Curator.
+            </p>
+        </div>
+<!-- Centralized Content Bento Grid-ish Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left: Form & Actions -->
+<div class="lg:col-span-5 space-y-8">
+<section class="glass-card p-10 rounded-2xl border-white/5 glow-card-primary group">
+    <h3 class="text-white font-black text-sm uppercase tracking-[0.2em] mb-10 opacity-60">Identity Framework</h3>
+    <div class="space-y-8">
+        <div>
+            <label class="block text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-3">Node Title</label>
+            <input class="w-full bg-white/5 border border-white/5 focus:border-primary/20 focus:ring-4 focus:ring-primary/5 rounded-xl px-4 py-4 text-white font-bold tracking-tight transition-all placeholder:text-slate-700 outline-none" placeholder="Enter node identifier..." type="text"/>
+        </div>
+        <div>
+            <label class="block text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-3">Domain Cluster</label>
+            <div class="relative">
+                <select class="w-full bg-white/5 border border-white/5 focus:border-primary/20 focus:ring-4 focus:ring-primary/5 rounded-xl px-4 py-4 text-white font-bold tracking-tight appearance-none transition-all outline-none">
+                    <option class="bg-surface-container-lowest">Data Structures & Algorithms</option>
+                    <option class="bg-surface-container-lowest">Database Management (DBMS)</option>
+                    <option class="bg-surface-container-lowest">Computer Networks</option>
+                    <option class="bg-surface-container-lowest">Operating Systems (OS)</option>
+                    <option class="bg-surface-container-lowest">Software Engineering</option>
+                    <option class="bg-surface-container-lowest">Cloud Computing & AWS</option>
+                    <option class="bg-surface-container-lowest">Artificial Intelligence</option>
+                    <option class="bg-surface-container-lowest">Web Technologies (Full Stack)</option>
+                </select>
+                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">expand_more</span>
+            </div>
+        </div>
+        <div>
+            <label class="block text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-3">Active Node Context</label>
+            <div class="flex flex-wrap gap-2">
+                <span class="bg-primary/10 text-primary px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] border border-primary/20 flex items-center gap-2">
+                    Distributed Systems <button class="material-symbols-outlined text-[14px]">close</button>
+                </span>
+                <span class="bg-primary/10 text-primary px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] border border-primary/20 flex items-center gap-2">
+                    B-Tree Indexing <button class="material-symbols-outlined text-[14px]">close</button>
+                </span>
+                <button class="bg-white/5 hover:bg-white/10 text-slate-500 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] border border-dashed border-white/10 transition-all">
+                    + Add Link
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="flex flex-col gap-4 mt-8">
+    <button class="w-full py-5 bg-gradient-to-r from-primary-container to-secondary-container rounded-2xl text-white font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+        Process with AI
+        <span class="material-symbols-outlined text-sm">bolt</span>
+    </button>
+    <button class="w-full py-5 glass-card hover:bg-white/5 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all">
+        Direct Archive
+    </button>
+</div>
+</div>
+<!-- Right: Drag & Drop + File List -->
+<div class="lg:col-span-7 space-y-8">
+<!-- Dropzone -->
+<div class="upload-dashed-border p-1 reveal" style="transition-delay: 200ms;">
+    <div class="glass-card h-96 rounded-2xl flex flex-col items-center justify-center group cursor-pointer hover:bg-white/5 transition-all overflow-hidden relative">
+        <div class="absolute -top-20 -right-20 w-64 h-64 bg-primary/5 blur-[80px] rounded-full group-hover:bg-primary/10 transition-colors"></div>
+        <div class="w-24 h-24 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-10 group-hover:scale-110 transition-all duration-500 relative z-10">
+            <span class="material-symbols-outlined text-5xl text-primary" style="font-variation-settings: 'FILL' 1;">cloud_upload</span>
+        </div>
+        <h4 class="text-2xl font-black text-white mb-3 font-headline tracking-tighter relative z-10">Neural Ingestion</h4>
+        <p class="text-on-surface-variant text-sm font-medium opacity-60 relative z-10">PDF, DOCX, or RAW up to 100MB</p>
+        <div class="mt-10 px-8 py-3 bg-primary/10 rounded-xl text-[10px] font-black text-primary uppercase tracking-[0.2em] border border-primary/20 relative z-10 group-hover:bg-primary group-hover:text-white transition-all">
+            Browse Neural Nodes
+        </div>
+    </div>
+</div>
+<!-- Uploaded Files List -->
+<div class="space-y-6">
+    <div class="flex justify-between items-end border-b border-white/5 pb-4">
+        <h3 class="text-white font-black text-sm uppercase tracking-[0.2em] opacity-40">Active Queue</h3>
+        <span class="text-[10px] font-black text-primary uppercase tracking-widest bg-primary/10 px-3 py-1 rounded-full border border-primary/10">2 Nodes Loaded</span>
+    </div>
+    <div class="space-y-4">
+        <!-- File Item 1 -->
+        <div class="glass-card p-6 rounded-xl flex items-center justify-between glow-card-primary group">
+            <div class="flex items-center gap-6">
+                <div class="w-14 h-14 bg-red-400/10 border border-red-400/20 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-red-400" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+                </div>
+                <div>
+                    <p class="text-md font-black text-white tracking-tight">Quantum_Mechanics_Intro.pdf</p>
+                    <p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold mt-1 opacity-50">12.4 MB • Neural Grid Map</p>
+                </div>
+            </div>
+            <button class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-red-400/10 hover:text-red-400 transition-all bg-white/5">
+                <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+        </div>
+        <!-- File Item 2 -->
+        <div class="glass-card p-6 rounded-xl flex items-center justify-between glow-card-primary group">
+            <div class="flex items-center gap-6">
+                <div class="w-14 h-14 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">description</span>
+                </div>
+                <div>
+                    <p class="text-md font-black text-white tracking-tight">Lecture_Notes_WK1.docx</p>
+                    <p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold mt-1 opacity-50">2.1 MB • Intelligence Stream</p>
+                </div>
+            </div>
+            <button class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-red-400/10 hover:text-red-400 transition-all bg-white/5">
+                <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<!-- Footer Decorative / AI Status -->
+<div class="mt-20 border-t border-outline-variant/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-6">
+<div class="flex -space-x-3">
+<img alt="Avatar" class="w-10 h-10 rounded-full border-4 border-background" data-alt="close up of a cheerful man with a beard and glasses in high resolution" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC9JEOcWYeFHf2wNCSK9rUSd9vJQThExG56q4_54FuwaB3AXanVz2unxnXe1a6Gl3EtFqYW3xdI7RldDIROOSCLPg8iqcNDbvErLzHqaY4wcV5HR44hCOAxpV5ZpqLbVPdxnlCTOpem-Nn-hvpJ1jdJayhi6l4NA-HDtwaJ2hvxejg8c7fmZyZqKgJmq-HUi8uvrXDlrPAYn2URYJEn2_I3ljPg3FDnBV1v3-R0aex2UdPlHUdnrL5iZ0ClqwnXR5xVFyvR_T2k6Q"/>
+<img alt="Avatar" class="w-10 h-10 rounded-full border-4 border-background" data-alt="portrait of a confident woman with curly dark hair and a warm smile looking at the camera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALPaygSUfWM1a4MS98bStfDUV6obV-4b9BNX8gEThtzi1N5c2ibCjD4Zt7g9poYwJL5SI9UqQ-luMcw1TGwG4o3v_Q572bbLUahuQatneoNacj8Jx-pr9IzFOxXcSwaSLJV00ahDKxTLMTrV1l4C6DRDmVIkoQneKB2b_ObHK4Py_plrGjWFsi_fuQ8CXgcvuU_ADIvlQNFvwsSHlX13dMbuezV9LpiFsr1j1ZLyR2HuDaOUS2CEnvAjQgGBu-FEnlUYK2vESLQFo"/>
+<div class="w-10 h-10 rounded-full border-4 border-background bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-on-surface">
+                                +42
+                            </div>
+</div>
+<p class="text-sm text-on-surface-variant">Students are currently studying Quantum Physics with AI</p>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-2 px-4 py-2 bg-tertiary-container/10 backdrop-blur-md rounded-full border border-tertiary/20">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-xs font-bold text-tertiary uppercase tracking-tighter">AI Core Online</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Decorative Background Glows -->
+<div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary-container/10 blur-[120px] rounded-full pointer-events-none z-[-1]"></div>
+<div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary-container/10 blur-[120px] rounded-full pointer-events-none z-[-1]"></div>
+</body></html>

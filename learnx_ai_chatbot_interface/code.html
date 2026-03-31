@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LearnX AI | Digital Curator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#1e2024",
+              "on-surface": "#e2e2e8",
+              "on-primary-fixed": "#000e5e",
+              "error-container": "#93000a",
+              "surface": "#111318",
+              "on-secondary": "#5d0054",
+              "on-primary-container": "#abb6ff",
+              "on-secondary-fixed": "#3a0033",
+              "surface-container-high": "#282a2e",
+              "on-secondary-container": "#fff0f7",
+              "inverse-surface": "#e2e2e8",
+              "surface-tint": "#bbc3ff",
+              "on-primary-fixed-variant": "#052dcc",
+              "error": "#ffb4ab",
+              "tertiary": "#00daf3",
+              "on-tertiary-fixed": "#001f24",
+              "on-error-container": "#ffdad6",
+              "primary-fixed": "#dee0ff",
+              "on-error": "#690005",
+              "on-tertiary-fixed-variant": "#004f58",
+              "on-tertiary": "#00363d",
+              "surface-variant": "#333539",
+              "inverse-on-surface": "#2f3035",
+              "primary": "#bbc3ff",
+              "tertiary-fixed-dim": "#00daf3",
+              "background": "#111318",
+              "outline": "#8f8fa1",
+              "on-surface-variant": "#c5c5d8",
+              "on-primary": "#001c94",
+              "on-tertiary-container": "#00cce4",
+              "surface-bright": "#37393e",
+              "secondary-container": "#ca04b7",
+              "surface-container-lowest": "#0c0e12",
+              "secondary-fixed-dim": "#fface9",
+              "tertiary-fixed": "#9cf0ff",
+              "outline-variant": "#444655",
+              "primary-container": "#1032cf",
+              "inverse-primary": "#314be3",
+              "surface-container-low": "#1a1c20",
+              "on-secondary-fixed-variant": "#840077",
+              "surface-dim": "#111318",
+              "surface-container-highest": "#333539",
+              "secondary-fixed": "#ffd7f1",
+              "secondary": "#fface9",
+              "tertiary-container": "#00525c",
+              "primary-fixed-dim": "#bbc3ff",
+              "on-background": "#e2e2e8"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(30, 32, 36, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .glow-card-primary:hover {
+            box-shadow: 0 0 50px -10px rgba(16, 50, 207, 0.3);
+            border-color: rgba(16, 50, 207, 0.4);
+            transform: translateY(-4px);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #bbc3ff 0%, #314be3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .sidebar-active {
+            background: linear-gradient(90deg, rgba(171, 182, 255, 0.1) 0%, transparent 100%);
+            border-left: 2px solid #bbc3ff;
+        }
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .typing-dot {
+            animation: bounce-slow 1s infinite ease-in-out;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30">
+<!-- SideNavBar Execution -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-6 bg-surface-container-lowest/80 backdrop-blur-3xl w-72 border-r border-white/5 z-50">
+    <div class="mb-12 px-2">
+        <h1 class="text-2xl font-black tracking-tighter text-white font-headline">LearnX AI</h1>
+        <p class="text-[10px] uppercase tracking-[0.3em] text-primary font-black mt-1">Digital Curator</p>
+    </div>
+    <nav class="flex-1 space-y-3">
+        <!-- New Session Action -->
+        <button class="w-full flex items-center gap-4 px-4 py-3 bg-primary/10 text-white rounded-xl font-bold transition-all hover:bg-primary/20 mb-6 group border border-primary/20">
+            <span class="material-symbols-outlined text-primary group-hover:rotate-90 transition-all">add_circle</span>
+            <span class="text-xs uppercase tracking-widest">New Query Node</span>
+        </button>
+        
+        <div class="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em] px-4 mb-4 opacity-40">Previous Logs</div>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl opacity-40">history</span>
+            <span class="truncate">Quantum Physics Intro</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl opacity-40">history</span>
+            <span class="truncate">Neural Networks 101</span>
+        </a>
+        
+        <div class="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em] px-4 mt-8 mb-4 opacity-40">Platform</div>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">auto_stories</span>
+            <span>Study Library</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">insights</span>
+            <span>Performance</span>
+        </a>
+    </nav>
+    <div class="mt-auto pt-8 border-t border-white/5 space-y-4">
+        <a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant/60 hover:text-white font-headline text-xs font-bold transition-all" href="#">
+            <span class="material-symbols-outlined text-xl">settings</span>
+            <span>Preferences</span>
+        </a>
+        <div class="flex items-center gap-4 glass-card p-4 rounded-xl">
+            <img alt="User Avatar" class="w-10 h-10 rounded-lg border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwnzUe9UGjYyChvq_XLO2sKio51Pd43039rT5sBJd1QinD7qA1G7AhMG9HJP0iZ_cez-LwjQ-jaRk-H0KohDPKA1hKW6LduMkZchRb6JmW21LICQADt5lhvfOkT8L70ebXUJ2RehbxY23FXsOxR-QGsJT3D6DWA-CNtxW0mpY76NVU2nV9PBQzOrnWNfr7TjDToQOc7gDC8uMf3Z1iJjZU6vi53Qn_aBS80v4iUfKY8EwdXrKGJJ0A_e7mFaM-zmF8tfmgLp3Has4"/>
+            <div class="overflow-hidden">
+                <p class="text-xs font-black text-white truncate uppercase tracking-tighter">Academic User</p>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                    <p class="text-[9px] font-black text-primary uppercase tracking-widest">Active Chat</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-72 flex-1 relative flex flex-col h-screen">
+<!-- TopNavBar Execution -->
+<header class="fixed top-0 right-0 left-72 h-20 flex items-center justify-between px-10 z-30 bg-[#111318]/40 backdrop-blur-xl border-b border-white/5 font-headline">
+    <div class="flex items-center gap-4">
+        <div class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></div>
+        <h2 class="text-lg font-black text-white tracking-tighter uppercase tracking-widest">Active <span class="text-gradient-primary">Processing</span></h2>
+    </div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-white cursor-pointer transition-colors">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-secondary-container rounded-full border-2 border-background"></span>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-outline-variant/30">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="Close-up portrait of a professional woman with a minimalist background, high-end editorial lighting, and shallow depth of field" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwnzUe9UGjYyChvq_XLO2sKio51Pd43039rT5sBJd1QinD7qA1G7AhMG9HJP0iZ_cez-LwjQ-jaRk-H0KohDPKA1hKW6LduMkZchRb6JmW21LICQADt5lhvfOkT8L70ebXUJ2RehbxY23FXsOxR-QGsJT3D6DWA-CNtxW0mpY76NVU2nV9PBQzOrnWNfr7TjDToQOc7gDC8uMf3Z1iJjZU6vi53Qn_aBS80v4iUfKY8EwdXrKGJJ0A_e7mFaM-zmF8tfmgLp3Has4"/>
+</div>
+</div>
+</header>
+<!-- Chat History -->
+<div class="flex-1 overflow-y-auto px-8 pt-24 pb-48 custom-scrollbar">
+<div class="max-w-3xl mx-auto space-y-12">
+<!-- User Message -->
+<div class="flex flex-col items-end space-y-2 reveal">
+    <div class="max-w-[70%] text-on-surface text-xl font-medium leading-relaxed tracking-tight text-right">
+        Can you explain the basic principles of Quantum Entanglement and why it's considered "spooky action at a distance"?
+    </div>
+    <span class="text-[10px] font-black text-primary uppercase tracking-[0.2em] opacity-60">Transmission Received • 12:44 PM</span>
+</div>
+<!-- AI Message -->
+<div class="flex flex-col items-start space-y-4 reveal" style="transition-delay: 150ms;">
+    <div class="glass-card rounded-2xl p-10 border-white/5 max-w-[90%] relative glow-card-primary group">
+        <div class="absolute -top-4 -left-4 w-10 h-10 bg-gradient-to-br from-primary-container to-secondary-container rounded-xl flex items-center justify-center shadow-xl shadow-primary/20 group-hover:scale-110 transition-all">
+            <span class="material-symbols-outlined text-white text-lg" style="font-variation-settings: 'FILL' 1;">psychology</span>
+        </div>
+        <div class="space-y-6 text-on-surface font-headline leading-relaxed">
+            <p class="text-lg font-bold tracking-tight">Quantum entanglement is a physical phenomenon that occurs when a pair or group of particles are generated, interact, or share spatial proximity.</p>
+            <div class="p-6 bg-primary/5 border-l-2 border-primary rounded-r-xl space-y-4">
+                <p>Einstein famously called it <span class="text-gradient-primary font-black uppercase tracking-widest text-sm">"spooky action at a distance"</span> because:</p>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-4">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
+                        <p class="text-sm font-medium"><span class="font-black text-primary uppercase tracking-tighter mr-2">Instantaneous Interaction:</span> Measuring one particle instantly determines the state of the other.</p>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
+                        <p class="text-sm font-medium"><span class="font-black text-primary uppercase tracking-tighter mr-2">Locality Violation:</span> Suggests state isn't limited by the speed of light.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex items-center gap-3 reveal" style="transition-delay: 300ms;">
+    <div class="glass-card px-6 py-4 rounded-full border-white/5 flex gap-2 items-center">
+        <div class="flex gap-1">
+            <div class="w-1.5 h-1.5 bg-primary rounded-full typing-dot" style="animation-delay: 0s"></div>
+            <div class="w-1.5 h-1.5 bg-secondary rounded-full typing-dot" style="animation-delay: 0.2s"></div>
+            <div class="w-1.5 h-1.5 bg-tertiary rounded-full typing-dot" style="animation-delay: 0.4s"></div>
+        </div>
+        <span class="ml-2 text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60">Digital Curator is processing node...</span>
+    </div>
+</div>
+</div>
+</div>
+<!-- Floating Footer Area -->
+<div class="fixed bottom-0 right-0 left-72 p-10 bg-gradient-to-t from-background via-background/90 to-transparent z-40">
+    <div class="max-w-4xl mx-auto space-y-6">
+        <!-- Intelligence Vector Selector -->
+        <div class="flex justify-center reveal" style="transition-delay: 400ms;">
+            <div class="glass-card p-1 rounded-full border-white/5 flex gap-1 shadow-2xl">
+                <button class="flex items-center gap-2 px-6 py-2 bg-primary text-on-primary rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined text-xs">bolt</span>
+                    Short
+                </button>
+                <button class="flex items-center gap-2 px-6 py-2 text-on-surface-variant/60 hover:text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all">
+                    <span class="material-symbols-outlined text-xs">description</span>
+                    Detailed
+                </button>
+                <button class="flex items-center gap-2 px-6 py-2 text-on-surface-variant/60 hover:text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all">
+                    <span class="material-symbols-outlined text-xs">quiz</span>
+                    Exam
+                </button>
+            </div>
+        </div>
+        <!-- Command Console -->
+        <div class="relative group reveal" style="transition-delay: 500ms;">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-tertiary/20 blur-3xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-700 rounded-full"></div>
+            <div class="relative glass-card border border-white/10 rounded-2xl p-3 flex items-center gap-3 shadow-2xl">
+                <button class="p-4 text-on-surface-variant hover:text-primary transition-all rounded-xl hover:bg-primary/10">
+                    <span class="material-symbols-outlined">attach_file</span>
+                </button>
+                <input class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant/30 px-4 py-4 font-headline font-bold text-lg" placeholder="Enter academic query command..." type="text"/>
+                <div class="flex gap-2">
+                    <button class="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-container to-secondary-container text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                        Execute
+                        <span class="material-symbols-outlined text-sm">bolt</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <p class="text-[9px] text-on-surface-variant/40 uppercase tracking-[0.4em] font-black">LearnX Neural Processor v4.0</p>
+        </div>
+    </div>
+</div>
+</main>
+<!-- Contextual FAB (Hidden as per rule: suppressed on chat/details screen) -->
+<!-- Suppression logic applied: Chat interface is task-focused -->
+</body></html>

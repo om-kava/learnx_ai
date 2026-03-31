@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard | LearnX AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed": "#ffd7f1",
+              "on-secondary-fixed-variant": "#840077",
+              "tertiary-fixed-dim": "#00daf3",
+              "on-tertiary-fixed-variant": "#004f58",
+              "on-primary": "#001c94",
+              "outline-variant": "#444655",
+              "secondary-fixed-dim": "#fface9",
+              "on-error-container": "#ffdad6",
+              "surface-container": "#1e2024",
+              "tertiary-fixed": "#9cf0ff",
+              "surface-container-lowest": "#0c0e12",
+              "on-tertiary": "#00363d",
+              "on-secondary-fixed": "#3a0033",
+              "on-tertiary-container": "#00cce4",
+              "surface-variant": "#333539",
+              "surface": "#111318",
+              "on-primary-container": "#abb6ff",
+              "on-error": "#690005",
+              "inverse-surface": "#e2e2e8",
+              "surface-bright": "#37393e",
+              "secondary-container": "#ca04b7",
+              "secondary": "#fface9",
+              "on-tertiary-fixed": "#001f24",
+              "primary-container": "#1032cf",
+              "tertiary": "#00daf3",
+              "on-primary-fixed-variant": "#052dcc",
+              "surface-container-highest": "#333539",
+              "primary-fixed": "#dee0ff",
+              "inverse-primary": "#314be3",
+              "outline": "#8f8fa1",
+              "on-surface-variant": "#c5c5d8",
+              "surface-container-low": "#1a1c20",
+              "surface-container-high": "#282a2e",
+              "primary": "#bbc3ff",
+              "surface-dim": "#111318",
+              "on-background": "#e2e2e8",
+              "inverse-on-surface": "#2f3035",
+              "surface-tint": "#bbc3ff",
+              "error": "#ffb4ab",
+              "background": "#111318",
+              "primary-fixed-dim": "#bbc3ff",
+              "on-surface": "#e2e2e8",
+              "on-secondary": "#5d0054",
+              "on-primary-fixed": "#000e5e",
+              "tertiary-container": "#00525c",
+              "error-container": "#93000a",
+              "on-secondary-container": "#fff0f7"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #111318;
+            color: #e2e2e8;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 32, 36, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .glow-card-primary:hover {
+            box-shadow: 0 0 50px -10px rgba(16, 50, 207, 0.3);
+            border-color: rgba(16, 50, 207, 0.4);
+            transform: translateY(-4px);
+        }
+        .glow-card-tertiary:hover {
+            box-shadow: 0 0 50px -10px rgba(0, 218, 243, 0.3);
+            border-color: rgba(0, 218, 243, 0.4);
+            transform: translateY(-4px);
+        }
+        .glow-card-secondary:hover {
+            box-shadow: 0 0 50px -10px rgba(255, 172, 233, 0.3);
+            border-color: rgba(255, 172, 233, 0.4);
+            transform: translateY(-4px);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #bbc3ff 0%, #314be3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating-ai {
+            animation: float 6s ease-in-out infinite;
+        }
+        .sidebar-active {
+            background: linear-gradient(90deg, rgba(171, 182, 255, 0.1) 0%, transparent 100%);
+            border-left: 2px solid #bbc3ff;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-6 bg-surface-container-lowest/80 backdrop-blur-3xl w-72 border-r border-white/5 z-50">
+    <div class="mb-12 px-2">
+        <h1 class="text-2xl font-black tracking-tighter text-white font-headline">LearnX AI</h1>
+        <p class="text-[10px] uppercase tracking-[0.3em] text-primary font-black mt-1">Administrator Hub</p>
+    </div>
+    <nav class="flex-1 space-y-3">
+        <!-- Active Link -->
+        <a class="flex items-center gap-4 px-4 py-3 text-white sidebar-active rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="../admin_dashboard_learnx_ai/code.html">
+            <span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+            <span>Dashboard Home</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="../user_management_admin_console/code.html">
+            <span class="material-symbols-outlined text-xl">group</span>
+            <span>Students & Faculty</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">library_books</span>
+            <span>Content Library</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="../quiz_results_summary/code.html">
+            <span class="material-symbols-outlined text-xl">quiz</span>
+            <span>Quiz Analytics</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">settings</span>
+            <span>Platform Config</span>
+        </a>
+    </nav>
+    <div class="mt-auto pt-8 border-t border-white/5 space-y-4">
+        <a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant/60 hover:text-white font-headline text-xs font-bold transition-all" href="../learnx_ai_landing_page/code.html">
+            <span class="material-symbols-outlined text-xl">logout</span>
+            <span>Logout</span>
+        </a>
+        <div class="flex items-center gap-4 glass-card p-4 rounded-xl">
+            <img alt="Admin Avatar" class="w-10 h-10 rounded-lg border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSUsDxTfmOAXpGZ680YbyitnoglDCHFib5FAukjQCPeNPDwzf7euxNxF-XcsVX9Jpq1GTxmAReIESoAZeH08zQ5doyNlUaN20kv_qWRUhPskBVGL7Aq2rF_ltpQgVWHcpqHSF82MumUulc6H37ziTrZB2nUj9esyrANQhdim9vD2bPsQmKSoM4BeVl5BFhUsUhyuKWwu3ofaN5vpUt0YX-QlE5ueuNgmsXqu646aPmhi811K5IGcCMIMbewAmtC6NJP91dwSCAsHw"/>
+            <div class="overflow-hidden">
+                <p class="text-xs font-black text-white truncate uppercase tracking-tighter">System Admin</p>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                    <p class="text-[9px] font-black text-primary uppercase tracking-widest">Active Status</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-72 min-h-screen flex flex-col">
+<!-- TopNavBar (Execution from JSON) -->
+<header class="sticky top-0 z-40 flex items-center justify-between px-8 bg-slate-950/20 backdrop-blur-xl w-full h-16 border-b border-white/5">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-sm pl-10 pr-4 py-1.5 text-sm font-body focus:ring-1 focus:ring-blue-500/30 text-on-surface-variant placeholder:text-slate-500" placeholder="Search parameters..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-slate-300 hover:text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-slate-300 hover:text-white transition-colors">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<div class="h-6 w-px bg-white/10"></div>
+<div class="flex items-center gap-3">
+<span class="text-slate-300 font-body text-sm font-medium tracking-wide">Admin Profile</span>
+<img alt="Administrator" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYntqny0PIZj0FoyMcfeenzGCPWwoGEb5Qv_oS_nlvmCPXxzGQsnc8PUxYEWHdO338rY1wnXC2RPPqvYfr8vz9-pv-1jisls0awaIjuttUG2fz3NAAARkhKuhhkLeG0gukhs09x-OBkIbBMONKfQeHM1PNT_x_NYPc2B8y7NuIrzQQ_aj-P_fBdKKIUuzVPL39PMnNEbLvl5AXoyZMQf9xR7F-aB-Z4sfbQ6FxHGrWdghD4ftOtZ4iuvGsgKzmZxjeJT-uRCAus9M"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="p-10 space-y-12">
+    <!-- Hero Title -->
+    <section class="flex justify-between items-end reveal">
+        <div>
+            <div class="inline-block px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-4">Site Administrator</div>
+            <h2 class="text-5xl font-black tracking-tighter font-headline text-white">Management <span class="text-gradient-primary">Control</span></h2>
+            <p class="text-on-surface-variant font-medium mt-3 text-lg opacity-70">Overseeing Student & Faculty engagement across the LearnX ecosystem.</p>
+        </div>
+        <div class="flex gap-4">
+            <button class="px-8 py-3 glass-card text-white font-bold text-sm rounded-xl hover:bg-white/5 transition-all">Download Audit</button>
+            <button class="px-8 py-3 bg-gradient-to-r from-primary-container to-secondary-container text-white font-black text-sm rounded-xl hover:scale-105 transition-all shadow-lg hover:shadow-primary/20">Analyze User Trends</button>
+        </div>
+    </section>
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="reveal glass-card p-10 rounded-2xl relative overflow-hidden group glow-card-primary" style="transition-delay: 50ms;">
+        <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-30 transition-opacity">
+            <span class="material-symbols-outlined text-7xl text-primary">person</span>
+        </div>
+        <p class="text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] mb-2 opacity-60">Total Users</p>
+        <div class="flex items-baseline gap-3">
+            <h3 class="text-5xl font-black font-headline text-white tracking-tighter">24.8k</h3>
+            <span class="text-primary text-[10px] font-black flex items-center bg-primary/10 border border-primary/20 px-2.5 py-1 rounded-full">
+                <span class="material-symbols-outlined text-[10px]">trending_up</span> +12.4%
+            </span>
+        </div>
+        <div class="mt-8 w-full h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-primary-container to-primary w-3/4 rounded-full"></div>
+        </div>
+    </div>
+<div class="reveal glass-card p-10 rounded-2xl relative overflow-hidden group glow-card-secondary" style="transition-delay: 150ms;">
+        <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-30 transition-opacity">
+            <span class="material-symbols-outlined text-7xl text-secondary">trending_up</span>
+        </div>
+        <p class="text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] mb-2 opacity-60">Learning Sessions</p>
+        <div class="flex items-baseline gap-3">
+            <h3 class="text-5xl font-black font-headline text-white tracking-tighter">1.2M+</h3>
+        </div>
+        <div class="mt-8 flex gap-1 items-end">
+            <div class="h-4 w-1.5 bg-secondary-container/60 rounded-full"></div>
+            <div class="h-8 w-1.5 bg-secondary-container rounded-full animate-pulse"></div>
+            <div class="h-6 w-1.5 bg-secondary-container/40 rounded-full"></div>
+            <div class="h-10 w-1.5 bg-secondary-container rounded-full"></div>
+            <div class="h-5 w-1.5 bg-secondary-container/80 rounded-full animate-pulse"></div>
+            <div class="h-9 w-1.5 bg-secondary-container rounded-full"></div>
+        </div>
+    </div>
+<div class="reveal glass-card p-10 rounded-2xl relative overflow-hidden group glow-card-tertiary" style="transition-delay: 250ms;">
+        <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-30 transition-opacity">
+            <span class="material-symbols-outlined text-7xl text-tertiary">library_books</span>
+        </div>
+        <p class="text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] mb-2 opacity-60">Learning Materials</p>
+        <div class="flex items-baseline gap-3">
+            <h3 class="text-5xl font-black font-headline text-white tracking-tighter">458k</h3>
+            <p class="text-[10px] text-primary font-black uppercase tracking-widest">+1.2k today</p>
+        </div>
+        <div class="mt-8 flex -space-x-4">
+            <div class="w-10 h-10 rounded-xl bg-primary/20 border-2 border-surface flex items-center justify-center text-[10px] font-black">PDF</div>
+            <div class="w-10 h-10 rounded-xl bg-secondary/20 border-2 border-surface flex items-center justify-center text-[10px] font-black">MP4</div>
+            <div class="w-10 h-10 rounded-xl bg-tertiary/20 border-2 border-surface flex items-center justify-center text-[10px] font-black">DOC</div>
+        </div>
+    </div>
+</section>
+<!-- Content Row 1: Analytics & Activity -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- User Growth Chart (Simulated) -->
+<div class="lg:col-span-8 glass-card p-8 rounded-lg">
+<div class="flex justify-between items-start mb-8">
+    <div>
+        <h4 class="text-xl font-bold font-headline text-white">Enrollment Metrics</h4>
+        <p class="text-xs text-on-surface-variant">New Students vs Faculty registrations (Last 30 days)</p>
+    </div>
+    <div class="flex gap-2">
+        <span class="flex items-center gap-1.5 text-xs font-medium text-primary">
+            <span class="w-2 h-2 rounded-full bg-primary"></span> Students
+        </span>
+        <span class="flex items-center gap-1.5 text-xs font-medium text-slate-500 ml-4">
+            <span class="w-2 h-2 rounded-full bg-slate-700"></span> Faculty
+        </span>
+    </div>
+</div>
+<!-- Simplified Visual Chart Elements -->
+<div class="h-64 flex items-end justify-between px-2 gap-4">
+<div class="w-full bg-surface-container-high rounded-t-lg relative group h-[40%]">
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-t-lg"></div>
+</div>
+<div class="w-full bg-surface-container-high rounded-t-lg relative group h-[55%]">
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-t-lg"></div>
+</div>
+<div class="w-full bg-surface-container-high rounded-t-lg relative group h-[45%]">
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-t-lg"></div>
+</div>
+<div class="w-full bg-surface-container-high rounded-t-lg relative group h-[70%]">
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-t-lg"></div>
+</div>
+<div class="w-full bg-surface-container-high rounded-t-lg relative group h-[65%]">
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-t-lg"></div>
+</div>
+<div class="w-full bg-primary/80 rounded-t-lg relative group h-[85%] neon-glow-primary">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] px-2 py-1 rounded font-bold">2.4k</div>
+</div>
+<div class="w-full bg-surface-container-high rounded-t-lg relative group h-[75%]">
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-t-lg"></div>
+</div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-medium text-slate-600 px-2 uppercase tracking-widest">
+<span>WK 01</span>
+<span>WK 02</span>
+<span>WK 03</span>
+<span>WK 04</span>
+</div>
+</div>
+<!-- System Activity Feed -->
+<div class="lg:col-span-4 flex flex-col gap-8">
+<div class="glass-card p-6 rounded-lg flex-1">
+<h4 class="text-lg font-bold font-headline text-white mb-6">Activity Kernel</h4>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-xl">sync</span>
+</div>
+<div>
+    <p class="text-sm font-semibold text-white">New Course Material</p>
+    <p class="text-xs text-on-surface-variant">Physics Department uploaded 12 new modules</p>
+    <p class="text-[10px] text-slate-600 mt-1 uppercase font-bold">2 mins ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-xl">shield_person</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-white">Privileged Escalation</p>
+<p class="text-xs text-on-surface-variant">User 'Alex M.' promoted to Editor</p>
+<p class="text-[10px] text-slate-600 mt-1 uppercase font-bold">14 mins ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-error text-xl">warning</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-white">Latent Node Timeout</p>
+<p class="text-xs text-on-surface-variant">Cluster 4B reported high latency</p>
+<p class="text-[10px] text-slate-600 mt-1 uppercase font-bold">1 hour ago</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-2 text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-widest">View Master Logs</button>
+</div>
+</div>
+</section>
+<!-- User Management Table -->
+<section class="glass-card rounded-lg overflow-hidden">
+<div class="p-8 border-b border-white/5 flex justify-between items-center">
+<div>
+<h4 class="text-xl font-bold font-headline text-white">Recent Interactions</h4>
+<p class="text-xs text-on-surface-variant">Last 10 user sessions monitored</p>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-slate-400 hover:text-white"><span class="material-symbols-outlined">filter_list</span></button>
+<button class="px-4 py-2 rounded-xl bg-surface-container-high text-sm font-bold text-slate-300">See All</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body">
+<thead>
+    <tr class="bg-surface-container-low/50">
+        <th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">Student / Faculty</th>
+        <th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">Role</th>
+        <th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">Last Activity</th>
+        <th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">Engagement</th>
+        <th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Actions</th>
+    </tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<img alt="User" class="w-9 h-9 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATCBRmw91nerHmhGrzk_jVJ3iN_8znrud4hxZucVFH7tV4-1F2xaoduzaqxl715v3nG4qsuxmKtlN981j-vVe8iASyDRXdtemS90100fW3uZJOI1fOQDVbqYNQuGHJZzjaEVinYwiXMEDKqRdql8z7B2Jp-2JKz6NBj43GWo3DUFBB720PaQwNNEtm4jt8ljigu09H8xr9QTzarHzS7S9zd2LEblslfSHrxbYgIWS3-ADPe9SjXPjfJVzkTNwfeChoExVsxxj8SQU"/>
+<div>
+<p class="text-sm font-bold text-white">Elena Vance</p>
+<p class="text-[10px] text-slate-500">vance.e@neurolink.io</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary-container/10 text-primary border border-primary/20">Researcher</span>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_8px_rgba(0,218,243,0.5)]"></span>
+<span class="text-xs font-medium text-on-surface">Active Syncing</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<div class="w-24 h-1 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-4/5"></div>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-slate-500 hover:text-white transition-colors"><span class="material-symbols-outlined">more_horiz</span></button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<img alt="User" class="w-9 h-9 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLqCAvLwNr4-ov64a3XUOedZFq9Og7PwRp_3bK1E84mVc6W6uIEvQN7q9Ofps6rJxtuMVxIjU0qliav7AitRl0SAXTFxz3JA3bJ1Ff_iUt66QUEzqc1Jwwn77BfLQ3bf2mdlrlD3GftxEsGUQUsyWzTIDmutC7DvlW3O259dXnH9Bad2_PtXs2tqQyXY53qrPq2PZfTWDAL2nSGy0OMr_tG38KaxcEMybaT25qe3a3sbmMBXWg97k9YwlqDNd7Twwa9sQ_74-RI0k"/>
+<div>
+<p class="text-sm font-bold text-white">Julian Thorne</p>
+<p class="text-[10px] text-slate-500">j.thorne@acme.corp</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-secondary-container/10 text-secondary border border-secondary/20">Contributor</span>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-600"></span>
+<span class="text-xs font-medium text-slate-500">Idle State</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<div class="w-24 h-1 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-slate-600 w-1/5"></div>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-slate-500 hover:text-white transition-colors"><span class="material-symbols-outlined">more_horiz</span></button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<img alt="User" class="w-9 h-9 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqRXvE8JwsmKOdQDEqBXnvaWiGwtxlk-3KUyUe5K2SaQVjppBONZdUflnjMVYOtn1e8-0uMRg5nZ4xoL1w6eSV0Gz6Gqu4LCvmX7mtzVPdoN8ZUoxzvwOUgn8CQ7tu4Rvwhr9IWXG_wB44c3GKCZrD5qVyrqIf6fnB6e9wFTfM9Dbkz0rRKEtpNF76qh5MqYBnqO_qKvcmD6dG-sEiRVrrPEplwp8nX7Au6P-GilHFPwKg0ZkzZ9EOlSHurjH18KgP_Eaq44dyA9Y"/>
+<div>
+<p class="text-sm font-bold text-white">Sarah Jenkins</p>
+<p class="text-[10px] text-slate-500">s.jenkins@edu.ai</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary-container/10 text-primary border border-primary/20">Researcher</span>
+</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_8px_rgba(0,218,243,0.5)]"></span>
+<span class="text-xs font-medium text-on-surface">Data Ingesting</span>
+</div>
+</td>
+<td class="px-8 py-5">
+<div class="w-24 h-1 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-3/5"></div>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-slate-500 hover:text-white transition-colors"><span class="material-symbols-outlined">more_horiz</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Bottom Insight Panel (Asymmetric Design) -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
+<div class="lg:col-span-2 glass-card p-10 rounded-lg bg-gradient-to-br from-surface-container to-surface-container-low flex flex-col md:flex-row gap-8 items-center">
+<div class="relative shrink-0">
+<div class="w-48 h-48 rounded-full border-[12px] border-surface-container-highest flex items-center justify-center relative">
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="fill-none stroke-primary-container stroke-[12]" cx="50%" cy="50%" r="84" stroke-dasharray="527" stroke-dashoffset="150" stroke-linecap="round"></circle>
+</svg>
+<div class="text-center">
+<p class="text-3xl font-extrabold text-white">72%</p>
+<p class="text-[10px] font-bold uppercase text-slate-500 tracking-tighter">Node Load</p>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+    <h5 class="text-2xl font-bold font-headline text-white">Platform Growth Peak</h5>
+    <p class="text-on-surface-variant font-body leading-relaxed max-w-md">Student engagement is currently 14% higher than last month. Suggested action: Add more practice quizzes to the 'Web Development' track.</p>
+    <button class="flex items-center gap-2 text-tertiary font-bold text-sm hover:underline">
+        View Growth Strategy <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </button>
+</div>
+</div>
+<div class="reveal glass-card p-1 rounded-2xl bg-gradient-to-tr from-primary/20 to-tertiary/20 floating-ai" style="transition-delay: 400ms;">
+    <div class="bg-surface/60 backdrop-blur-md p-8 h-full rounded-2xl flex flex-col justify-between">
+        <div class="w-14 h-14 bg-primary/20 rounded-2xl flex items-center justify-center mb-6 border border-primary/10">
+            <span class="material-symbols-outlined text-primary text-3xl">add_task</span>
+        </div>
+        <div>
+            <h5 class="text-2xl font-black text-white mb-2 tracking-tight">Pending Approval</h5>
+            <p class="text-sm text-on-surface-variant font-medium leading-relaxed opacity-80">Faculty 'Dr. Sarah' has uploaded a new Module: "Machine Learning Basics". Review for approval?</p>
+        </div>
+        <div class="mt-10 flex gap-3">
+            <button class="flex-1 py-3 bg-white/5 text-white/60 text-xs font-black rounded-xl hover:bg-white/10 transition-all uppercase tracking-widest">Reject</button>
+            <button class="flex-1 py-3 bg-primary text-on-primary text-xs font-black rounded-xl hover:scale-105 transition-all uppercase tracking-widest shadow-lg shadow-primary/20">Approve</button>
+        </div>
+    </div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

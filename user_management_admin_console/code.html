@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Management | LearnX AI Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary-container": "#ca04b7",
+            "surface-container-lowest": "#0c0e12",
+            "on-tertiary-container": "#00cce4",
+            "primary-fixed": "#dee0ff",
+            "tertiary-fixed": "#9cf0ff",
+            "surface-container": "#1e2024",
+            "on-secondary-fixed-variant": "#840077",
+            "on-tertiary-fixed-variant": "#004f58",
+            "surface-container-highest": "#333539",
+            "outline-variant": "#444655",
+            "primary-fixed-dim": "#bbc3ff",
+            "error": "#ffb4ab",
+            "surface-container-low": "#1a1c20",
+            "surface-bright": "#37393e",
+            "primary": "#bbc3ff",
+            "on-primary-fixed-variant": "#052dcc",
+            "primary-container": "#1032cf",
+            "on-primary": "#001c94",
+            "surface-dim": "#111318",
+            "on-secondary-container": "#fff0f7",
+            "on-tertiary-fixed": "#001f24",
+            "on-primary-fixed": "#000e5e",
+            "on-background": "#e2e2e8",
+            "tertiary-fixed-dim": "#00daf3",
+            "on-tertiary": "#00363d",
+            "on-secondary": "#5d0054",
+            "secondary-fixed-dim": "#fface9",
+            "on-surface-variant": "#c5c5d8",
+            "on-primary-container": "#abb6ff",
+            "on-secondary-fixed": "#3a0033",
+            "on-error": "#690005",
+            "tertiary-container": "#00525c",
+            "surface-variant": "#333539",
+            "surface-tint": "#bbc3ff",
+            "secondary-fixed": "#ffd7f1",
+            "on-error-container": "#ffdad6",
+            "error-container": "#93000a",
+            "surface": "#111318",
+            "outline": "#8f8fa1",
+            "inverse-primary": "#314be3",
+            "tertiary": "#00daf3",
+            "on-surface": "#e2e2e8",
+            "surface-container-high": "#282a2e",
+            "secondary": "#fface9",
+            "inverse-surface": "#e2e2e8",
+            "background": "#111318",
+            "inverse-on-surface": "#2f3035"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+        .glass-card {
+            background: rgba(30, 32, 36, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .glow-card-primary:hover {
+            box-shadow: 0 0 50px -10px rgba(16, 50, 207, 0.3);
+            border-color: rgba(16, 50, 207, 0.4);
+            transform: translateY(-4px);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #bbc3ff 0%, #314be3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .sidebar-active {
+            background: linear-gradient(90deg, rgba(171, 182, 255, 0.1) 0%, transparent 100%);
+            border-left: 2px solid #bbc3ff;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-white overflow-x-hidden">
+<aside class="fixed left-0 top-0 h-full flex flex-col p-6 bg-surface-container-lowest/80 backdrop-blur-3xl w-72 border-r border-white/5 z-50">
+    <div class="mb-12 px-2">
+        <h1 class="text-2xl font-black tracking-tighter text-white font-headline">LearnX AI</h1>
+        <p class="text-[10px] uppercase tracking-[0.3em] text-primary font-black mt-1">Administrator Hub</p>
+    </div>
+    <nav class="flex-1 space-y-3">
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="../admin_dashboard_learnx_ai/code.html">
+            <span class="material-symbols-outlined text-xl">dashboard</span>
+            <span>Dashboard Home</span>
+        </a>
+        <!-- Active Link -->
+        <a class="flex items-center gap-4 px-4 py-3 text-white sidebar-active rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="../user_management_admin_console/code.html">
+            <span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">group</span>
+            <span>Students & Faculty</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="../quiz_results_summary/code.html">
+            <span class="material-symbols-outlined text-xl">quiz</span>
+            <span>Quiz Analytics</span>
+        </a>
+        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
+            <span class="material-symbols-outlined text-xl">settings</span>
+            <span>Platform Config</span>
+        </a>
+    </nav>
+    <div class="mt-auto pt-8 border-t border-white/5 space-y-4">
+        <a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant/60 hover:text-white font-headline text-xs font-bold transition-all" href="#">
+            <span class="material-symbols-outlined text-xl">logout</span>
+            <span>Logout</span>
+        </a>
+        <div class="flex items-center gap-4 glass-card p-4 rounded-xl">
+            <img alt="Admin Avatar" class="w-10 h-10 rounded-lg border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV-AApSF-VOH4099LFE8lv_ZSmQPe7VcDmfkOw3Y_UcwViVsYXfBpaUMvBqGRfp3aoUxaWY_YXj5n2vOsrYQYb3twykDTLZgLkxfx-TJyzq-CtowAuLtMGlLFjcw8chxPp55OA4LAbMH1daFPzPMadNMkasOwIZNksO48F8dXYQYXDGeai3_Wd8GBPhtDig0QF7-rJ7uPbaFGcrgIPLC5c7OldI6dgGlV-D5l4xKfbDdSfQ4qVfTkIPD00a3CqgGdCYx-B_pXHO6w"/>
+            <div class="overflow-hidden">
+                <p class="text-xs font-black text-white truncate uppercase tracking-tighter">Admin Console</p>
+                <div class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest">Active Status</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="ml-72 flex-1 flex flex-col min-w-0 bg-background">
+    <!-- TopNavBar -->
+    <header class="sticky top-0 z-50 w-full h-20 bg-background/40 backdrop-blur-3xl flex justify-between items-center px-10 border-b border-white/5 shadow-sm">
+        <div class="flex items-center flex-1">
+            <div class="relative w-full max-w-md group">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg group-focus-within:text-primary transition-colors">search</span>
+                <input class="w-full bg-surface-container-highest/30 border border-white/5 rounded-xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-slate-600 font-bold tracking-tight text-white" placeholder="Filter users by name or email..." type="text"/>
+            </div>
+        </div>
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-6 text-on-surface-variant/60">
+                <button class="hover:text-primary transition-all relative group">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full border-2 border-background animate-pulse"></span>
+                </button>
+            </div>
+            <div class="h-8 w-[1px] bg-white/5"></div>
+            <div class="flex items-center gap-4 group cursor-pointer bg-white/5 px-4 py-2 rounded-xl border border-white/5">
+                <div class="text-right">
+                    <p class="text-white font-black text-sm tracking-tighter leading-none">Admin Console</p>
+                    <p class="text-[9px] text-emerald-500 font-black uppercase tracking-widest mt-1">Superuser</p>
+                </div>
+                <img alt="Admin Profile" class="w-10 h-10 rounded-lg border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV-AApSF-VOH4099LFE8lv_ZSmQPe7VcDmfkOw3Y_UcwViVsYXfBpaUMvBqGRfp3aoUxaWY_YXj5n2vOsrYQYb3twykDTLZgLkxfx-TJyzq-CtowAuLtMGlLFjcw8chxPp55OA4LAbMH1daFPzPMadNMkasOwIZNksO48F8dXYQYXDGeai3_Wd8GBPhtDig0QF7-rJ7uPbaFGcrgIPLC5c7OldI6dgGlV-D5l4xKfbDdSfQ4qVfTkIPD00a3CqgGdCYx-B_pXHO6w"/>
+            </div>
+        </div>
+    </header>
+<!-- Content Canvas -->
+<div class="p-10 md:p-14 md:px-24 reveal">
+    <!-- Header Section -->
+    <header class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+        <div>
+            <span class="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-[0.3em] mb-6">Administrative Control</span>
+            <h2 class="text-6xl font-black font-headline text-white tracking-tighter leading-[1.1]">User <span class="text-gradient-primary">Management</span></h2>
+            <p class="text-on-surface-variant mt-4 text-xl font-medium max-w-xl opacity-70">Monitor platform population, manage permissions, and track institutional growth through automated intel.</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="px-8 py-5 bg-white/5 border border-white/10 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-3">
+                <span class="material-symbols-outlined text-lg">file_download</span>
+                Export
+            </button>
+            <button class="px-10 py-5 bg-gradient-to-br from-primary-container to-secondary-container text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center gap-3">
+                <span class="material-symbols-outlined text-lg">person_add</span>
+                Add New User
+            </button>
+        </div>
+    </header>
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 reveal" style="transition-delay: 100ms;">
+        <div class="glass-card p-10 rounded-[2.5rem] border-white/5 glow-card-primary relative overflow-hidden">
+            <div class="absolute -top-16 -right-16 w-32 h-32 bg-primary/5 blur-[50px] rounded-full"></div>
+            <div class="flex items-center justify-between mb-8">
+                <div class="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-all">
+                    <span class="material-symbols-outlined text-2xl">groups</span>
+                </div>
+                <span class="text-emerald-400 text-[10px] font-black uppercase tracking-widest bg-emerald-400/10 px-3 py-1 rounded-full">+12% growth</span>
+            </div>
+            <p class="text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] mb-2 opacity-50">Total Platform Users</p>
+            <h3 class="text-4xl font-black font-headline text-white tracking-tighter">2,450</h3>
+        </div>
+        <div class="glass-card p-10 rounded-[2.5rem] border-white/5 glow-card-primary relative overflow-hidden">
+            <div class="absolute -top-16 -right-16 w-32 h-32 bg-tertiary/5 blur-[50px] rounded-full"></div>
+            <div class="flex items-center justify-between mb-8">
+                <div class="w-12 h-12 rounded-xl bg-tertiary/10 border border-tertiary/20 flex items-center justify-center text-tertiary group-hover:scale-110 transition-all">
+                    <span class="material-symbols-outlined text-2xl">school</span>
+                </div>
+                <span class="text-emerald-400 text-[10px] font-black uppercase tracking-widest bg-emerald-400/10 px-3 py-1 rounded-full">+5.2%</span>
+            </div>
+            <p class="text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] mb-2 opacity-50">Active Students</p>
+            <h3 class="text-4xl font-black font-headline text-white tracking-tighter">1,820</h3>
+        </div>
+        <div class="glass-card p-10 rounded-[2.5rem] border-white/5 glow-card-primary relative overflow-hidden">
+            <div class="absolute -top-16 -right-16 w-32 h-32 bg-secondary/5 blur-[50px] rounded-full"></div>
+            <div class="flex items-center justify-between mb-8">
+                <div class="w-12 h-12 rounded-xl bg-secondary/10 border border-secondary/20 flex items-center justify-center text-secondary group-hover:scale-110 transition-all">
+                    <span class="material-symbols-outlined text-2xl">supervisor_account</span>
+                </div>
+                <span class="text-on-surface-variant text-[10px] font-black uppercase tracking-widest bg-white/5 px-3 py-1 rounded-full">Stable</span>
+            </div>
+            <p class="text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] mb-2 opacity-50">Faculty Members</p>
+            <h3 class="text-4xl font-black font-headline text-white tracking-tighter">630</h3>
+        </div>
+    </div>
+    <!-- Filters & Table Section -->
+    <div class="glass-card rounded-[2.5rem] border-white/5 overflow-hidden reveal shadow-2xl" style="transition-delay: 200ms;">
+        <!-- Table Header / Filters -->
+        <div class="p-8 border-b border-white/5 flex flex-wrap items-center justify-between gap-6 bg-white/5">
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest opacity-50">Filter Role</label>
+                    <div class="bg-surface-container-highest/50 px-4 py-2 rounded-xl border border-white/10 flex items-center gap-2">
+                        <select class="bg-transparent border-none text-[11px] font-black uppercase tracking-widest text-white focus:ring-0 cursor-pointer">
+                            <option>All Platforms</option>
+                            <option>Faculty</option>
+                            <option>Student</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <p class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest opacity-40">System scanning <span class="text-primary font-black">2,450</span> nodes</p>
+        </div>
+        <!-- Table Content -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-white/5">
+                        <th class="px-10 py-6 text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em]">Institutional Node</th>
+                        <th class="px-10 py-6 text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em]">Access Role</th>
+                        <th class="px-10 py-6 text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em]">Node Status</th>
+                        <th class="px-10 py-6 text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em]">Enrollment</th>
+                        <th class="px-10 py-6 text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em] text-right">Directives</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    <!-- Row 1 -->
+                    <tr class="group hover:bg-white/5 transition-all duration-300">
+                        <td class="px-10 py-8">
+                            <div class="flex items-center gap-4">
+                                <img alt="Elena Vance" class="w-12 h-12 rounded-xl object-cover shrink-0 border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDscfg6h7YwJkagzdLL2VVvWJvlh5YjQ8VBBKFOO1d4uiW-8gpgDQNUvDLLXoLMIpFWoda2YlJJ5q3aasmUZUoJgXfMB_w-CodmoW0MuWxiBRhCkubPosZPE0phbMEm7cQvlSDgG6MWVWgupxbzajZ_A3CHN9ua4hAD-tQXiYhP5qN4M6Su8XtuDqg1uZ2K0pCJ-wbAtmtHd0n6OZP2KuJ8kzfdsxYT4mTLv4ZvsrPkZNCy7tGYDFPojdX_o7QAz9mZDNZ15WfQnlA"/>
+                                <div>
+                                    <p class="text-white font-black font-headline tracking-tighter text-base">Elena Vance</p>
+                                    <p class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest opacity-50">elena.vance@learnx.ai</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-10 py-8">
+                            <span class="px-3 py-1 bg-secondary/10 border border-secondary/20 text-secondary text-[10px] font-black uppercase tracking-widest rounded-full">Institutional Faculty</span>
+                        </td>
+                        <td class="px-10 py-8">
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span class="text-[10px] font-black uppercase tracking-widest text-emerald-500">Live Connection</span>
+                            </div>
+                        </td>
+                        <td class="px-10 py-8 text-[10px] font-black text-on-surface-variant uppercase tracking-widest opacity-60">12 Oct 2023</td>
+                        <td class="px-10 py-8 text-right">
+                            <button class="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-on-surface-variant hover:text-white transition-all">
+                                <span class="material-symbols-outlined text-lg">more_horiz</span>
+                            </button>
+                        </td>
+                    </tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-white/5 transition-colors duration-200">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img alt="Marcus Chen" class="w-full h-full object-cover" data-alt="portrait of a young asian man with a friendly expression in a casual modern office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYDDL8Z2Q-fw0l-2NVlBUdZteml4VFRNXyHTznA39FcJb5ZxXcxwzYQXRuNp95w3fxtEtdtEt_D6euXfDOwNjdDKp7HV3CZjb4xvB5jJ0bZcIVHKwCiHUBecyzAyUuo_yx_a9kjqx5y6iUDk_lSXDG0lDegDFlKM_IuA_FXbwWEehqZVbBHkeOTjDp-jcr7B4sz5mjMIBSv6MtrRKnx_SAqTS02NmmfdVCi3giUm8_5uEaW0p4zFE5TPkh47EoeEVmjqWzGbDIk1k"/>
+</div>
+<div>
+<p class="text-white font-bold text-sm">Marcus Chen</p>
+<p class="text-xs text-on-surface-variant">marcus.chen@student.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs font-bold text-tertiary bg-tertiary/10 px-2.5 py-1 rounded-full">Student</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+<span class="text-sm font-medium text-emerald-500">Active</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface-variant">Nov 05 2023</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 bg-white/5 hover:bg-error/20 text-on-surface-variant hover:text-error rounded-lg text-xs font-bold transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">block</span>
+                      Block
+                    </button>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-white/5 transition-colors duration-200">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img alt="Sarah Jenkins" class="w-full h-full object-cover" data-alt="portrait of a young woman with a serious look, wearing business casual attire, neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCu0qNQko131eTToODpIRJT0mcUqTyUup8ZoQ_OmEgw1QutymNVitvM7TclDELmEqhQREZJC5XB33DekeNbfJDLQDUwDM7RbrBdDie0RmrmFgwa8PPyJjWWHvQuOY1wtxubsXrYPXZVCJWgj69tTJDh8La5tU5FDoHPJQgRDmJaMHoscJlOoYKWQe5iJa5kl0X7diXv0aeEs7GdraUezdWlydmgUyL6eL8VGytsb2XjoQRxcd4CQ2pB5kidtTN4Ga1X2UsRYjwMVsY"/>
+</div>
+<div>
+<p class="text-white font-bold text-sm">Sarah Jenkins</p>
+<p class="text-xs text-on-surface-variant">sarah.j@student.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs font-bold text-tertiary bg-tertiary/10 px-2.5 py-1 rounded-full">Student</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-error"></div>
+<span class="text-sm font-medium text-error">Blocked</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface-variant">Oct 20 2023</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 bg-white/5 hover:bg-emerald-500/20 text-on-surface-variant hover:text-emerald-500 rounded-lg text-xs font-bold transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                      Activate
+                    </button>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-white/5 transition-colors duration-200">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-[#C5C5D8]">person</span>
+</div>
+<div>
+<p class="text-white font-bold text-sm">Anonymous Student</p>
+<p class="text-xs text-on-surface-variant">anon_482@temp.ai</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs font-bold text-tertiary bg-tertiary/10 px-2.5 py-1 rounded-full">Student</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+<span class="text-sm font-medium text-amber-400">Pending</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface-variant">Jan 10 2024</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 bg-white/5 hover:bg-emerald-500/20 text-on-surface-variant hover:text-emerald-500 rounded-lg text-xs font-bold transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+                      Approve
+                    </button>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer -->
+<div class="p-6 bg-surface-container-low/30 border-t border-outline-variant/10 flex items-center justify-between">
+<button class="text-on-surface-variant text-sm font-bold flex items-center gap-1 hover:text-white transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+            Previous
+          </button>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded-lg bg-primary-container text-white text-sm font-bold">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-white/5 text-on-surface-variant text-sm font-bold">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-white/5 text-on-surface-variant text-sm font-bold">3</button>
+<span class="text-on-surface-variant">...</span>
+<button class="w-8 h-8 rounded-lg hover:bg-white/5 text-on-surface-variant text-sm font-bold">12</button>
+</div>
+<button class="text-on-surface-variant text-sm font-bold flex items-center gap-1 hover:text-white transition-colors">
+            Next
+            <span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+    <!-- Activity Insight Module -->
+    <div class="mt-16 glass-card p-10 rounded-[2.5rem] border-white/5 flex flex-col md:flex-row items-center gap-10 reveal" style="transition-delay: 400ms;">
+        <div class="w-24 h-24 rounded-3xl bg-tertiary/10 border border-tertiary/20 flex items-center justify-center text-tertiary shrink-0 shadow-2xl shadow-tertiary/20">
+            <span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        </div>
+        <div class="flex-1">
+            <span class="px-4 py-1.5 rounded-full bg-tertiary/10 border border-tertiary/20 text-tertiary text-[10px] font-black uppercase tracking-[0.3em] mb-6 inline-block">Curator Data Report</span>
+            <h4 class="text-2xl font-black font-headline text-white tracking-tighter mb-4">Unusual Growth Peak Detected in 'Applied Science'</h4>
+            <p class="text-on-surface-variant text-lg font-medium opacity-70 mb-6">LearnX AI has detected a 24% increase in student registrations within technical curriculum paths over the last 48 hours. The system recommends prioritizing faculty moderation nodes to maintain platform integrity.</p>
+            <button class="px-10 py-5 bg-gradient-to-br from-primary-container to-secondary-container text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-3">
+                Analyze Growth Vector
+                <span class="material-symbols-outlined text-sm">bolt</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="lg:ml-64 py-8 px-12 border-t border-white/5 text-center mt-auto reveal">
+    <p class="text-on-surface-variant/40 text-[10px] tracking-[0.3em] uppercase">LearnX Admin System • Managed by AI Assistant 4.0</p>
+</footer>
+</main>
+<!-- Mobile Navigation Placeholder -->
+<nav class="md:hidden fixed bottom-0 w-full h-16 bg-[#111318]/80 backdrop-blur-xl border-t border-outline-variant/10 flex items-center justify-around px-4 z-50">
+<span class="material-symbols-outlined text-[#C5C5D8]">dashboard</span>
+<span class="material-symbols-outlined text-white">group</span>
+<span class="material-symbols-outlined text-[#C5C5D8]">notifications</span>
+<span class="material-symbols-outlined text-[#C5C5D8]">settings</span>
+</nav>
+</body></html>

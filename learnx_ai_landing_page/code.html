@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>LearnX AI | The Digital Curator Framework</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Inter:wght@100..900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-fixed": "#000e5e",
+                        "secondary-fixed-dim": "#fface9",
+                        "inverse-surface": "#e2e2e8",
+                        "primary-fixed-dim": "#bbc3ff",
+                        "primary": "#bbc3ff",
+                        "tertiary": "#00daf3",
+                        "surface-container-highest": "#333539",
+                        "primary-container": "#1032cf",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#444655",
+                        "on-tertiary-container": "#00cce4",
+                        "surface": "#111318",
+                        "inverse-primary": "#314be3",
+                        "secondary-fixed": "#ffd7f1",
+                        "inverse-on-surface": "#2f3035",
+                        "tertiary-fixed": "#9cf0ff",
+                        "on-background": "#e2e2e8",
+                        "background": "#111318",
+                        "surface-container": "#1e2024",
+                        "surface-variant": "#333539",
+                        "on-secondary-container": "#fff0f7",
+                        "surface-container-low": "#1a1c20",
+                        "tertiary-fixed-dim": "#00daf3",
+                        "on-secondary": "#5d0054",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#282a2e",
+                        "on-surface-variant": "#c5c5d8",
+                        "on-tertiary": "#00363d",
+                        "surface-container-lowest": "#0c0e12",
+                        "on-primary-container": "#abb6ff",
+                        "primary-fixed": "#dee0ff",
+                        "on-tertiary-fixed-variant": "#004f58",
+                        "tertiary-container": "#00525c",
+                        "on-secondary-fixed": "#3a0033",
+                        "on-primary": "#001c94",
+                        "secondary": "#fface9",
+                        "surface-tint": "#bbc3ff",
+                        "on-tertiary-fixed": "#001f24",
+                        "outline": "#8f8fa1",
+                        "secondary-container": "#ca04b7",
+                        "surface-dim": "#111318",
+                        "on-secondary-fixed-variant": "#840077",
+                        "surface-bright": "#37393e",
+                        "on-primary-fixed-variant": "#052dcc",
+                        "on-surface": "#e2e2e8",
+                        "on-error-container": "#ffdad6"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #111318;
+            color: #e2e2e8;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(30, 32, 36, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 0%, rgba(16, 50, 207, 0.2) 0%, rgba(17, 19, 24, 0) 75%);
+        }
+
+        .text-glow-primary {
+            text-shadow: 0 0 20px rgba(16, 50, 207, 0.4);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glow-card-primary:hover {
+            box-shadow: 0 0 60px -15px rgba(16, 50, 207, 0.3);
+            border-color: rgba(16, 50, 207, 0.4);
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .glow-card-tertiary:hover {
+            box-shadow: 0 0 60px -15px rgba(0, 218, 243, 0.3);
+            border-color: rgba(0, 218, 243, 0.4);
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .glow-card-secondary:hover {
+            box-shadow: 0 0 60px -15px rgba(255, 172, 233, 0.3);
+            border-color: rgba(255, 172, 233, 0.4);
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #bbc3ff 0%, #314be3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(2deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</head>
+
+<body class="selection:bg-primary-container selection:text-white">
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#111318]/80 backdrop-blur-xl shadow-[0px_24px_48px_-12px_rgba(0,0,0,0.5)]">
+        <div class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+            <div class="text-2xl font-black tracking-tighter text-white">LearnX AI</div>
+            <div class="hidden md:flex items-center gap-10 font-['Manrope'] tracking-tight headline-sm">
+                <a class="text-white font-bold border-b-2 border-[#1032CF] pb-1" href="#">Home</a>
+                <a class="text-[#C5C5D8] hover:text-white transition-colors hover:bg-white/5 px-3 py-1 rounded-lg"
+                    href="#">Features</a>
+                <div
+                    class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
+                    <span class="w-1 h-1 rounded-full bg-primary animate-pulse"></span>
+                    Open Beta
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button
+                    class="hidden md:block text-[#C5C5D8] hover:text-white transition-all px-4 py-2 font-medium text-sm">Sign
+                    In</button>
+                <button
+                    class="bg-[#1032CF] text-white px-8 py-3 rounded-xl font-bold tracking-tight scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(16,50,207,0.4)]">
+                    Get Free Access
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <header class="relative pt-40 pb-24 px-8 overflow-hidden">
+        <div class="absolute inset-0 hero-gradient -z-10"></div>
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
+            <div class="flex-1 space-y-8">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-high border border-outline-variant/15 text-tertiary-fixed font-medium text-sm">
+                    <span class="material-symbols-outlined text-sm"
+                        style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                    Introducing The Digital Curator Framework
+                </div>
+                <h1 class="font-headline font-black text-7xl md:text-9xl leading-[0.95] tracking-tight text-white mb-6">
+                    Learn <span class="text-gradient-primary">Smarter</span> <br />With AI.
+                </h1>
+                <p class="font-body text-on-surface-variant text-xl md:text-2xl max-w-xl leading-relaxed">
+                    Move beyond passive reading. Our AI-driven engine synthesizes complex materials into personalized
+                    editorial learning paths tailored to your focus.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button
+                        class="px-10 py-5 bg-gradient-to-br from-primary-container to-secondary-container text-white font-bold text-lg rounded-xl transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(16,50,207,0.3)]">
+                        Get Started Free
+                    </button>
+                    <button
+                        class="px-10 py-5 glass-panel text-on-surface font-bold text-lg rounded-xl border border-outline-variant/20 hover:bg-surface-variant/60 transition-all">
+                        Explore Features
+                    </button>
+                </div>
+            </div>
+            <div class="flex-1 relative w-full aspect-square md:aspect-auto">
+                <div
+                    class="relative z-10 glass-panel rounded-lg border border-outline-variant/10 p-4 shadow-[0px_48px_80px_-16px_rgba(0,0,0,0.6)] transform md:rotate-3 hover:rotate-0 transition-transform duration-700">
+                    <img alt="Dashboard Preview" class="rounded-lg w-full h-auto object-cover opacity-90"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuASIEGOz5gKCoiGB1ichSfy5-V9chU053y5ZLridLcSIFN9BG_pywWJqGjkG5wPNotBFRmIlZiFxk-T69CB12k2IgKsVwRPi-D-zGsFpYEkJELE8Z9pAbnq1mBE9t7GLqQKsWVI9O3djR4DhTvr5MsXO9Brg6k7MNgxYLRdYkr-N7LQcc4KnvIXWf5oEAKzMDkhfUIsCltH1rSDq7aX89gQNs2vSU64_6xA-o3njIxHAalohFYVi5qvC00NoQjFgY8sXx7wyVBEKC4" />
+                    <!-- Floating Indicator -->
+                    <div
+                        class="absolute -bottom-6 -left-6 glass-panel p-6 rounded-lg border border-tertiary/20 shadow-2xl animate-pulse">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-gradient-to-tr from-tertiary to-primary-container flex items-center justify-center">
+                                <span class="material-symbols-outlined text-white">psychology</span>
+                            </div>
+                            <div>
+                                <div class="text-xs text-on-surface-variant uppercase tracking-widest font-bold">AI
+                                    Insight</div>
+                                <div class="text-white font-bold">98% Clarity Score</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="absolute -top-10 -right-10 w-64 h-64 bg-secondary-container/20 rounded-full blur-[100px] -z-10">
+                </div>
+                <div
+                    class="absolute -bottom-20 -left-20 w-80 h-80 bg-primary-container/20 rounded-full blur-[120px] -z-10">
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="py-24 px-8 bg-surface-container-low border-y border-outline-variant/10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 text-center">
+            <div class="reveal space-y-3">
+                <div class="text-6xl font-black font-headline text-white tracking-tighter">50K+</div>
+                <p class="text-on-surface-variant font-medium uppercase tracking-[0.2em] text-[10px]">Trusted by
+                    Learners</p>
+            </div>
+            <div class="reveal space-y-3" style="transition-delay: 100ms;">
+                <div class="text-6xl font-black font-headline text-tertiary tracking-tighter">12.4M</div>
+                <p class="text-on-surface-variant font-medium uppercase tracking-[0.2em] text-[10px]">Real-time Insights
+                </p>
+            </div>
+            <div class="reveal space-y-3" style="transition-delay: 200ms;">
+                <div class="text-6xl font-black font-headline text-white tracking-tighter">800K+</div>
+                <p class="text-on-surface-variant font-medium uppercase tracking-[0.2em] text-[10px]">Digital Assets</p>
+            </div>
+        </div>
+    </section>
+    <!-- Features Bento Grid -->
+    <section class="py-32 px-8">
+        <div class="max-w-7xl mx-auto space-y-16">
+            <div class="text-center space-y-4">
+                <h2 class="text-4xl md:text-5xl font-headline font-black text-white tracking-tight">Crafted for
+                    Excellence</h2>
+                <p class="text-on-surface-variant max-w-2xl mx-auto text-lg">Harness tools that don't just organize your
+                    data, but elevate your understanding through high-fidelity AI processing.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                <!-- Large Card 1 -->
+                <div
+                    class="md:col-span-8 group relative overflow-hidden glass-panel rounded-lg p-10 border border-outline-variant/10 hover:border-primary/30 transition-all duration-500">
+                    <div class="flex flex-col h-full justify-between gap-12">
+                        <div class="space-y-4 max-w-md">
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-primary-container/20 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined text-3xl">hub</span>
+                            </div>
+                            <h3 class="text-3xl font-bold text-white">AI Learning Engine</h3>
+                            <p class="text-on-surface-variant text-lg leading-relaxed">Our proprietary neural network
+                                digests textbooks and lectures to create interconnected knowledge maps tailored to your
+                                specific cognitive style.</p>
+                        </div>
+                        <div class="relative rounded-lg overflow-hidden border border-outline-variant/20">
+                            <img alt="AI Analysis"
+                                class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz09xbvrzp4S42we1wns_3We2u3v9cRvvOGuoeVS6orQcxx_IY-4zJBP51Ai2udhGFTjFb9VNRknyo9aEhJvbJUmYXj1QHNlQJ06SH5f4P4xIn7APE7dl8GuCkuHVPdTMxhYObRLWYMZFACU719r9Q1fpxRRnXwUqQV2M3juule9BZezIOuiorsdoj4O-vHs_ndxwmJVLeev-OmQwQcNzTL5rBZniamPZU4y3iDCS9yeOfQMxIgN9uyICrbh4lWdgTjVZjfyb5y2o" />
+                        </div>
+                    </div>
+                </div>
+                <!-- Small Card 1 -->
+                <div
+                    class="md:col-span-4 group glass-panel rounded-lg p-10 border border-outline-variant/10 hover:border-tertiary/30 transition-all duration-500">
+                    <div class="space-y-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-tertiary/10 flex items-center justify-center text-tertiary">
+                            <span class="material-symbols-outlined text-3xl">edit_note</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Smart Notes</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Real-time summarization that captures intent,
+                            not just words. Export to any format instantly.</p>
+                        <div class="pt-8 flex gap-2">
+                            <div class="h-1 w-12 bg-tertiary rounded-full"></div>
+                            <div class="h-1 w-8 bg-surface-container-highest rounded-full"></div>
+                            <div class="h-1 w-4 bg-surface-container-highest rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Small Card 2 -->
+                <div
+                    class="md:col-span-4 group glass-panel rounded-lg p-10 border border-outline-variant/10 hover:border-secondary/30 transition-all duration-500">
+                    <div class="space-y-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-secondary-container/20 flex items-center justify-center text-secondary">
+                            <span class="material-symbols-outlined text-3xl">quiz</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Adaptive Quizzes</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Questions that evolve with you. The system
+                            identifies your weak points and helps you master them.</p>
+                    </div>
+                </div>
+                <!-- Large Card 2 -->
+                <div
+                    class="md:col-span-8 group relative overflow-hidden bg-surface-container rounded-lg p-10 border border-outline-variant/10 transition-all duration-500">
+                    <div class="flex flex-col md:flex-row items-center gap-10">
+                        <div class="flex-1 space-y-4">
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-on-surface/5 flex items-center justify-center text-on-surface">
+                                <span class="material-symbols-outlined text-3xl">analytics</span>
+                            </div>
+                            <h3 class="text-3xl font-bold text-white">Deep Analytics</h3>
+                            <p class="text-on-surface-variant text-lg leading-relaxed">Visualize your progress with
+                                editorial-grade charts that reveal your true learning velocity and retention rates.</p>
+                        </div>
+                        <div class="flex-1 w-full bg-surface-container-highest rounded-lg p-6 space-y-4">
+                            <div class="flex justify-between items-end h-32 gap-2">
+                                <div class="w-full bg-primary/20 h-1/2 rounded-t-sm"></div>
+                                <div class="w-full bg-primary/40 h-3/4 rounded-t-sm"></div>
+                                <div class="w-full bg-primary h-full rounded-t-sm"></div>
+                                <div class="w-full bg-tertiary h-2/3 rounded-t-sm"></div>
+                                <div class="w-full bg-secondary h-5/6 rounded-t-sm"></div>
+                            </div>
+                            <div class="h-[1px] bg-outline-variant/20 w-full"></div>
+                            <div
+                                class="flex justify-between text-[10px] uppercase font-bold tracking-tighter text-on-surface-variant">
+                                <span>Mon</span><span>Wed</span><span>Fri</span><span>Sun</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- How It Works -->
+    <section class="py-32 px-8 bg-surface-container-lowest">
+        <div class="max-w-7xl mx-auto space-y-24">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div class="space-y-4">
+                    <div class="text-primary font-bold tracking-[0.2em] uppercase text-sm">The Workflow</div>
+                    <h2 class="text-5xl font-headline font-black text-white">From Raw Data to Wisdom</h2>
+                </div>
+                <p class="text-on-surface-variant max-w-sm text-lg">A simple four-step process that transforms how you
+                    absorb information.</p>
+            </div>
+            <div class="relative grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-4">
+                <!-- Connecting Line (Desktop Only) -->
+                <div
+                    class="hidden md:block absolute top-10 left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-primary/50 via-tertiary/50 to-secondary/50 -z-0">
+                </div>
+                <!-- Step 1 -->
+                <div class="relative z-10 flex flex-col items-center text-center space-y-6">
+                    <div
+                        class="w-20 h-20 rounded-full glass-panel border border-primary/40 flex items-center justify-center text-primary font-black text-2xl shadow-[0_0_20px_rgba(16,50,207,0.2)]">
+                        1</div>
+                    <div class="space-y-2">
+                        <h4 class="text-xl font-bold text-white">Ask</h4>
+                        <p class="text-on-surface-variant text-sm px-4">Upload PDFs, videos, or raw notes to LearnX AI.
+                        </p>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative z-10 flex flex-col items-center text-center space-y-6">
+                    <div
+                        class="w-20 h-20 rounded-full glass-panel border border-tertiary/40 flex items-center justify-center text-tertiary font-black text-2xl shadow-[0_0_20px_rgba(0,218,243,0.2)]">
+                        2</div>
+                    <div class="space-y-2">
+                        <h4 class="text-xl font-bold text-white">Learn</h4>
+                        <p class="text-on-surface-variant text-sm px-4">AI synthesizes the core concepts and builds a
+                            map.</p>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative z-10 flex flex-col items-center text-center space-y-6">
+                    <div
+                        class="w-20 h-20 rounded-full glass-panel border border-on-surface/40 flex items-center justify-center text-white font-black text-2xl">
+                        3</div>
+                    <div class="space-y-2">
+                        <h4 class="text-xl font-bold text-white">Save</h4>
+                        <p class="text-on-surface-variant text-sm px-4">Store insights in your persistent digital second
+                            brain.</p>
+                    </div>
+                </div>
+                <!-- Step 4 -->
+                <div class="relative z-10 flex flex-col items-center text-center space-y-6">
+                    <div
+                        class="w-20 h-20 rounded-full glass-panel border border-secondary/40 flex items-center justify-center text-secondary font-black text-2xl shadow-[0_0_20px_rgba(202,4,183,0.2)]">
+                        4</div>
+                    <div class="space-y-2">
+                        <h4 class="text-xl font-bold text-white">Improve</h4>
+                        <p class="text-on-surface-variant text-sm px-4">Continuous feedback loops refine your knowledge.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Integrated Ecosystem (Redesigned) -->
+    <!-- Integrated Ecosystem (Redesigned) -->
+    <section class="py-40 px-8 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#1032cf08,transparent_60%)] -z-10"></div>
+        <div class="max-w-7xl mx-auto space-y-24">
+            <div class="reveal text-center space-y-6 relative">
+                <div
+                    class="absolute left-1/2 -top-12 -translate-x-1/2 w-72 h-72 bg-primary/20 blur-[150px] -z-10 opacity-50">
+                </div>
+                <div
+                    class="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black uppercase tracking-[0.3em] mb-4">
+                    The Network
+                </div>
+                <h2 class="text-6xl md:text-7xl font-headline font-black text-white tracking-tighter">Unified
+                    Intelligence</h2>
+                <p class="text-on-surface-variant text-xl max-w-2xl mx-auto leading-relaxed">A seamless synergy between
+                    three core perspectives, creating a singular engine for academic evolution.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 relative">
+                <!-- Connecting Line Graphics (Mockup items) -->
+                <div
+                    class="hidden lg:block absolute top-[20%] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent -z-0">
+                </div>
+
+                <!-- User Card -->
+                <div class="reveal glow-card-primary group glass-panel rounded-2xl p-10 transition-all duration-500 cursor-default"
+                    style="transition-delay: 50ms;">
+                    <div class="relative z-10 space-y-8">
+                        <div
+                            class="w-20 h-20 rounded-3xl bg-primary/20 flex items-center justify-center text-primary border border-primary/10 shadow-[0_0_30px_rgba(16,50,207,0.15)] group-hover:scale-110 transition-transform duration-500">
+                            <span class="material-symbols-outlined text-5xl">person_search</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <h3 class="text-3xl font-black text-white tracking-tight">User</h3>
+                                <span
+                                    class="px-2 py-0.5 bg-primary/20 text-primary text-[10px] font-black uppercase tracking-widest rounded-full">Explorer</span>
+                            </div>
+                            <p class="text-on-surface-variant leading-relaxed text-lg font-medium opacity-80">Experience
+                                deep neural adaptive learning that evolves with your focus.</p>
+                        </div>
+                        <ul class="space-y-4 border-t border-outline-variant/10 pt-8">
+                            <li class="flex items-center gap-4 group/item">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover/item:bg-primary group-hover/item:text-white transition-all">
+                                    <span class="material-symbols-outlined text-sm">quiz</span>
+                                </div>
+                                <span class="text-white font-medium">Smart Adaptive Quizzes</span>
+                            </li>
+                            <li class="flex items-center gap-4 group/item">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover/item:bg-primary group-hover/item:text-white transition-all">
+                                    <span class="material-symbols-outlined text-sm">auto_stories</span>
+                                </div>
+                                <span class="text-white font-medium">Multi-dimensional Modes</span>
+                            </li>
+                            <li class="flex items-center gap-4 group/item">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover/item:bg-primary group-hover/item:text-white transition-all">
+                                    <span class="material-symbols-outlined text-sm">data_object</span>
+                                </div>
+                                <span class="text-white font-medium">Curation Material</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Faculty Card -->
+                <div class="reveal glow-card-tertiary group glass-panel rounded-2xl p-10 transition-all duration-500 cursor-default"
+                    style="transition-delay: 150ms;">
+                    <div class="relative z-10 space-y-8">
+                        <div
+                            class="w-20 h-20 rounded-3xl bg-tertiary/20 flex items-center justify-center text-tertiary border border-tertiary/10 shadow-[0_0_30px_rgba(0,218,243,0.15)] group-hover:scale-110 transition-transform duration-500">
+                            <span class="material-symbols-outlined text-5xl">school</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <h3 class="text-3xl font-black text-white tracking-tight">Faculty</h3>
+                                <span
+                                    class="px-2 py-0.5 bg-tertiary/20 text-tertiary text-[10px] font-black uppercase tracking-widest rounded-full">Architect</span>
+                            </div>
+                            <p class="text-on-surface-variant leading-relaxed text-lg font-medium opacity-80">Synthesize
+                                complexity and orchestrate content with surgical AI precision.</p>
+                        </div>
+                        <ul class="space-y-4 border-t border-outline-variant/10 pt-8">
+                            <li class="flex items-center gap-4 group/item">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary group-hover/item:bg-tertiary group-hover/item:text-white transition-all">
+                                    <span class="material-symbols-outlined text-sm">psychology</span>
+                                </div>
+                                <span class="text-white font-medium">Generative Faculty Quiz</span>
+                            </li>
+                            <li class="flex items-center gap-4 group/item">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary group-hover/item:bg-tertiary group-hover/item:text-white transition-all">
+                                    <span class="material-symbols-outlined text-sm">library_books</span>
+                                </div>
+                                <span class="text-white font-medium">Intelligent Material Hub</span>
+                            </li>
+                            <li class="flex items-center gap-4 group/item">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary group-hover/item:bg-tertiary group-hover/item:text-white transition-all">
+                                    <span class="material-symbols-outlined text-sm">group</span>
+                                </div>
+                                <span class="text-white font-medium">Behavioral Management</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Admin Card -->
+                <div class="reveal glow-card-secondary group glass-panel rounded-2xl p-10 transition-all duration-500 cursor-default"
+                    style="transition-delay: 250ms;">
+                    <div class="relative z-10 space-y-8">
+                        <div
+                            class="w-20 h-20 rounded-3xl bg-secondary/20 flex items-center justify-center text-secondary border border-secondary/10 shadow-[0_0_30px_rgba(255,172,233,0.15)] group-hover:scale-110 transition-transform duration-500">
+                            <span class="material-symbols-outlined text-5xl">corporate_fare</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <h3 class="text-3xl font-black text-white tracking-tight">Admin</h3>
+                                <span
+                                    class="px-2 py-0.5 bg-secondary/20 text-secondary text-[10px] font-black uppercase tracking-widest rounded-full">Control</span>
+                            </div>
+                            <p class="text-on-surface-variant leading-relaxed text-lg font-medium opacity-80">Govern the
+                                institutional ecosystem with enterprise-grade oversight.</p>
+                        </div>
+                        <ul class="space-y-4 border-t border-outline-variant/10 pt-8">
+                            <li class="flex items-center gap-4 group/item">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary group-hover/item:bg-secondary group-hover/item:text-white transition-all">
+                                    <span class="material-symbols-outlined text-sm">settings_input_component</span>
+                                </div>
+                                <span class="text-white font-medium">Core System Control</span>
+                            </li>
+                            <li class="flex items-center gap-4 group/item">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary group-hover/item:bg-secondary group-hover/item:text-white transition-all">
+                                    <span class="material-symbols-outlined text-sm">diversity_3</span>
+                                </div>
+                                <span class="text-white font-medium">Cross-Role Auditing</span>
+                            </li>
+                            <li class="flex items-center gap-4 group/item">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary group-hover/item:bg-secondary group-hover/item:text-white transition-all">
+                                    <span class="material-symbols-outlined text-sm">monitoring</span>
+                                </div>
+                                <span class="text-white font-medium">System Performance</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Testimonials -->
+    <section class="py-32 px-8 bg-surface-container-low/50">
+        <div class="max-w-7xl mx-auto space-y-16">
+            <div class="text-center">
+                <h2 class="text-4xl font-headline font-black text-white">Success Stories</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-lg bg-surface-container border border-outline-variant/10 space-y-6">
+                    <div class="flex text-tertiary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                    </div>
+                    <p class="text-on-surface-variant italic">"LearnX AI transformed my medical residency study prep.
+                        The synthesis engine is unparalleled."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary-container/30"></div>
+                        <div>
+                            <div class="text-white font-bold text-sm">Elena Rodriguez</div>
+                            <div class="text-on-surface-variant text-xs">Medical Student, Stanford</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8 rounded-lg bg-surface-container border border-outline-variant/10 space-y-6">
+                    <div class="flex text-tertiary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                    </div>
+                    <p class="text-on-surface-variant italic">"Finally, a tool that respects the nuance of research
+                        papers instead of just generating generic summaries."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-secondary-container/30"></div>
+                        <div>
+                            <div class="text-white font-bold text-sm">Dr. Marcus Chen</div>
+                            <div class="text-on-surface-variant text-xs">Asst. Professor, MIT</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8 rounded-lg bg-surface-container border border-outline-variant/10 space-y-6">
+                    <div class="flex text-tertiary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+                    </div>
+                    <p class="text-on-surface-variant italic">"The adaptive quizzes are frighteningly good at finding
+                        exactly what I don't know."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-tertiary/30"></div>
+                        <div>
+                            <div class="text-white font-bold text-sm">Sarah Jenkins</div>
+                            <div class="text-on-surface-variant text-xs">Graduate Student, Oxford</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FAQ -->
+    <section class="py-32 px-8">
+        <div class="max-w-3xl mx-auto space-y-12">
+            <h2 class="text-4xl font-headline font-black text-center text-white">Frequently Asked</h2>
+            <div class="space-y-4">
+                <div class="p-6 rounded-lg bg-surface-container border border-outline-variant/10">
+                    <div class="flex justify-between items-center cursor-pointer">
+                        <span class="text-white font-bold">How does the AI protect my study data?</span>
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
+                </div>
+                <div class="p-6 rounded-lg bg-surface-container border border-outline-variant/10">
+                    <div class="flex justify-between items-center cursor-pointer">
+                        <span class="text-white font-bold">Can I integrate with Notion and Obsidian?</span>
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
+                </div>
+                <div class="p-6 rounded-lg bg-surface-container border border-outline-variant/10">
+                    <div class="flex justify-between items-center cursor-pointer">
+                        <span class="text-white font-bold">What academic levels is LearnX AI suitable for?</span>
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Final CTA -->
+    <section class="py-32 px-8 relative overflow-hidden">
+        <div class="absolute inset-0 bg-primary-container/10 -z-10"></div>
+        <div class="max-w-5xl mx-auto text-center space-y-10">
+            <h2 class="text-5xl md:text-7xl font-headline font-black text-white tracking-tight">Ready to curate your
+                future?</h2>
+            <p class="text-on-surface-variant text-xl max-w-2xl mx-auto">Join 50,000+ students and educators redefining
+                the boundaries of intelligence. <span class="text-primary font-bold">Free for now.</span></p>
+            <div class="pt-6">
+                <button
+                    class="px-12 py-6 bg-gradient-to-r from-primary-container via-[#314be3] to-secondary-container text-white font-black text-xl rounded-xl shadow-[0_20px_40px_-10px_rgba(16,50,207,0.5)] hover:scale-105 transition-transform">
+                    Start Your Free Journey
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-[#111318] w-full py-20 px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-7xl mx-auto">
+            <div class="space-y-6">
+                <div class="text-xl font-black text-white">LearnX AI</div>
+                <p class="font-['Inter'] body-md text-[#C5C5D8] leading-relaxed">
+                    The next evolution in editorial learning frameworks. Designed for the focused mind. Accessible to
+                    all.
+                </p>
+                <div class="flex gap-4">
+                    <a class="text-[#C5C5D8] hover:text-[#00DAF3] transition-colors" href="#"><span
+                            class="material-symbols-outlined">language</span></a>
+                    <a class="text-[#C5C5D8] hover:text-[#00DAF3] transition-colors" href="#"><span
+                            class="material-symbols-outlined">alternate_email</span></a>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <h5 class="text-white font-bold uppercase tracking-widest text-xs">Product</h5>
+                <ul class="space-y-4 font-['Inter'] body-md text-[#C5C5D8]">
+                    <li><a class="hover:text-[#00DAF3] transition-colors" href="#">Features</a></li>
+                    <li><a class="hover:text-[#00DAF3] transition-colors" href="#">Solutions</a></li>
+                    <li><a class="text-primary font-bold" href="#">Free Open Beta</a></li>
+                </ul>
+            </div>
+            <div class="space-y-6">
+                <h5 class="text-white font-bold uppercase tracking-widest text-xs">Resources</h5>
+                <ul class="space-y-4 font-['Inter'] body-md text-[#C5C5D8]">
+                    <li><a class="hover:text-[#00DAF3] transition-colors" href="#">Documentation</a></li>
+                    <li><a class="hover:text-[#00DAF3] transition-colors" href="#">Twitter</a></li>
+                    <li><a class="hover:text-[#00DAF3] transition-colors" href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+            <div class="space-y-6">
+                <h5 class="text-white font-bold uppercase tracking-widest text-xs">Legal</h5>
+                <ul class="space-y-4 font-['Inter'] body-md text-[#C5C5D8]">
+                    <li><a class="hover:text-[#00DAF3] transition-colors" href="#">Privacy</a></li>
+                    <li><a class="hover:text-[#00DAF3] transition-colors" href="#">Terms</a></li>
+                    <li><a class="hover:text-[#00DAF3] transition-colors" href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-20 text-center md:text-left border-t border-outline-variant/10 mt-12">
+            <p class="font-['Inter'] body-md text-[#C5C5D8]">© 2024 LearnX AI. The Digital Curator Framework.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
