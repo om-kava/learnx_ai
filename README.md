@@ -61,6 +61,7 @@ This repository contains the following high-fidelity mockups:
 The mock ecosystem is built using a modern, lightweight, and high-performance stack:
 - **Core Stucture**: Vanilla HTML5 (Semantic & Accessible)
 - **Styling Archetype**: **Simple Hub Light Theme** using **Tailwind CSS Utility Engine**
+- **Design System**: **Lumina Pro** (Found in `lumina_pro/`) — A comprehensive editorial intelligence framework focused on high-contrast legibility and intentional asymmetry.
 - **Authorized Typography**: **Pure Black (#000000)** on **Slate-50 (#F8FAFC)** for 100% legibility.
 - **Dynamic Micro-Interactions**: Vanilla JavaScript for smooth state transitions and professional reveal animations.
 - **Branding Accents**: Signature **Indigo-Blue (#1032CF)** used for primary actions, focus states, and branding.
