@@ -1,363 +1,795 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LearnX AI | Faculty Creation Hub</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "tertiary-container": "#00525c",
-                        "on-secondary": "#5d0054",
-                        "on-tertiary": "#00363d",
-                        "background": "#111318",
-                        "surface-container-lowest": "#0c0e12",
-                        "on-primary": "#001c94",
-                        "secondary-fixed": "#ffd7f1",
-                        "primary-fixed-dim": "#bbc3ff",
-                        "surface-container-high": "#282a2e",
-                        "surface-container-low": "#1a1c20",
-                        "on-secondary-fixed-variant": "#840077",
-                        "secondary-container": "#ca04b7",
-                        "primary-fixed": "#dee0ff",
-                        "secondary": "#fface9",
-                        "on-background": "#e2e2e8",
-                        "surface-dim": "#111318",
-                        "tertiary": "#00daf3",
-                        "on-tertiary-container": "#00cce4",
-                        "surface-container-highest": "#333539",
-                        "surface-bright": "#37393e",
-                        "surface": "#111318",
-                        "inverse-on-surface": "#2f3035",
-                        "on-secondary-container": "#fff0f7",
-                        "primary": "#bbc3ff",
-                        "on-tertiary-fixed-variant": "#004f58",
-                        "on-surface": "#e2e2e8",
-                        "secondary-fixed-dim": "#fface9",
-                        "on-surface-variant": "#c5c5d8",
-                        "error-container": "#93000a",
-                        "tertiary-fixed-dim": "#00daf3",
-                        "on-primary-container": "#abb6ff",
-                        "surface-variant": "#333539",
-                        "on-tertiary-fixed": "#001f24",
-                        "tertiary-fixed": "#9cf0ff",
-                        "on-secondary-fixed": "#3a0033",
-                        "on-primary-fixed": "#000e5e",
-                        "primary-container": "#1032cf",
-                        "outline": "#8f8fa1",
-                        "on-error-container": "#ffdad6",
-                        "inverse-surface": "#e2e2e8",
-                        "outline-variant": "#444655",
-                        "surface-container": "#1e2024",
-                        "on-error": "#690005",
-                        "inverse-primary": "#314be3",
-                        "error": "#ffb4ab",
-                        "surface-tint": "#bbc3ff",
-                        "on-primary-fixed-variant": "#052dcc"
-                    },
-                    fontFamily: {
-                        "headline": ["Manrope"],
-                        "body": ["Inter"],
-                        "label": ["Inter"]
-                    },
-                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
-<style>
-        .glass-card {
-            background: rgba(30, 32, 36, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .glow-card-primary:hover {
-            box-shadow: 0 0 50px -10px rgba(16, 50, 207, 0.3);
-            border-color: rgba(16, 50, 207, 0.4);
-            transform: translateY(-4px);
-        }
-        .text-gradient-primary {
-            background: linear-gradient(135deg, #bbc3ff 0%, #314be3 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .sidebar-active {
-            background: linear-gradient(90deg, rgba(171, 182, 255, 0.1) 0%, transparent 100%);
-            border-left: 2px solid #bbc3ff;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        .floating-ai {
-            animation: float 6s ease-in-out infinite;
-        }
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = { threshold: 0.1 };
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, observerOptions);
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+<html class="light-mode-active" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>LearnX AI | Faculty Creation Hub</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "tertiary-container": "var(--mode-tertiary-container)",
+            "on-secondary": "var(--mode-on-secondary)",
+            "on-tertiary": "var(--mode-on-tertiary)",
+            "background": "var(--mode-background)",
+            "surface-container-lowest": "var(--mode-surface-container-lowest)",
+            "on-primary": "var(--mode-on-primary)",
+            "secondary-fixed": "var(--mode-secondary-fixed)",
+            "primary-fixed-dim": "var(--mode-primary-fixed-dim)",
+            "surface-container-high": "var(--mode-surface-container-high)",
+            "surface-container-low": "var(--mode-surface-container-low)",
+            "on-secondary-fixed-variant": "var(--mode-on-secondary-fixed-variant)",
+            "secondary-container": "var(--mode-secondary-container)",
+            "primary-fixed": "var(--mode-primary-fixed)",
+            "secondary": "var(--mode-secondary)",
+            "on-background": "var(--mode-on-background)",
+            "surface-dim": "var(--mode-surface-dim)",
+            "tertiary": "var(--mode-tertiary)",
+            "on-tertiary-container": "var(--mode-on-tertiary-container)",
+            "surface-container-highest": "var(--mode-surface-container-highest)",
+            "surface-bright": "var(--mode-surface-bright)",
+            "surface": "var(--mode-surface)",
+            "inverse-on-surface": "var(--mode-inverse-on-surface)",
+            "on-secondary-container": "var(--mode-on-secondary-container)",
+            "primary": "var(--mode-primary)",
+            "on-tertiary-fixed-variant": "var(--mode-on-tertiary-fixed-variant)",
+            "on-surface": "var(--mode-on-surface)",
+            "secondary-fixed-dim": "var(--mode-secondary-fixed-dim)",
+            "on-surface-variant": "var(--mode-on-surface-variant)",
+            "error-container": "var(--mode-error-container)",
+            "tertiary-fixed-dim": "var(--mode-tertiary-fixed-dim)",
+            "on-primary-container": "var(--mode-on-primary-container)",
+            "surface-variant": "var(--mode-surface-variant)",
+            "on-tertiary-fixed": "var(--mode-on-tertiary-fixed)",
+            "tertiary-fixed": "var(--mode-tertiary-fixed)",
+            "on-secondary-fixed": "var(--mode-on-secondary-fixed)",
+            "on-primary-fixed": "var(--mode-on-primary-fixed)",
+            "primary-container": "var(--mode-primary-container)",
+            "outline": "var(--mode-outline)",
+            "on-error-container": "var(--mode-on-error-container)",
+            "inverse-surface": "var(--mode-inverse-surface)",
+            "outline-variant": "var(--mode-outline-variant)",
+            "surface-container": "var(--mode-surface-container)",
+            "on-error": "var(--mode-on-error)",
+            "inverse-primary": "var(--mode-inverse-primary)",
+            "error": "var(--mode-error)",
+            "surface-tint": "var(--mode-surface-tint)",
+            "on-primary-fixed-variant": "var(--mode-on-primary-fixed-variant)",
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+        },
+      },
+    }
+  </script>
+  <style>
+    .glass-card {
+      background: rgba(30, 32, 36, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .glow-card-primary:hover {
+      box-shadow: 0 0 50px -10px rgba(16, 50, 207, 0.3);
+      border-color: rgba(16, 50, 207, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .text-gradient-primary {
+      background: linear-gradient(135deg, #1032cf 0%, #314be3 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .sidebar-active {
+      background: linear-gradient(90deg, rgba(171, 182, 255, 0.1) 0%, transparent 100%);
+      border-left: 2px solid #bbc3ff;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    .floating-ai {
+      animation: float 6s ease-in-out infinite;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observerOptions = { threshold: 0.1 };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
         });
-    </script>
+      }, observerOptions);
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+  </script>
+
+
+  <style id="dynamic-theme-vars">
+    :root {
+      --mode-surface-container-lowest: #ffffff;
+      --mode-background: #f8fafc;
+      --mode-on-background: #0f172a;
+      --mode-primary: #1032cf;
+      --mode-on-surface: #0f172a;
+      --mode-on-surface-variant: #0f172a;
+      --mode-surface-container: #f1f5f9;
+      --mode-surface-container-highest: #cbd5e1;
+      --mode-outline: #0f172a;
+      --mode-outline-variant: #cbd5e1;
+      --mode-primary-container: #d8e2ff;
+      --mode-secondary: #ca04b7;
+      --mode-tertiary: #009bb3;
+    }
+
+    /* Global Light Mode Settings */
+    body {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+    }
+
+    /* Visibility Fixes */
+    .text-white {
+      color: #0f172a !important;
+    }
+
+    .text-on-surface-variant {
+      color: #475569 !important;
+    }
+
+    .text-slate-500,
+    .text-slate-600 {
+      color: #64748b !important;
+    }
+
+    /* Keep White Text on Primary Buttons/Containers */
+    .bg-primary .text-white,
+    .bg-primary .material-symbols-outlined,
+    button.bg-primary .text-white,
+    .bg-gradient-to-r .text-white,
+    .text-on-primary {
+      color: #ffffff !important;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(20px) !important;
+      border: 1px solid rgba(15, 23, 42, 0.08) !important;
+      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    .sidebar-active {
+      background: linear-gradient(90deg, rgba(16, 50, 207, 0.05) 0%, transparent 100%) !important;
+      border-left: 3px solid #1032cf !important;
+      color: #1032cf !important;
+      font-weight: 900 !important;
+    }
+
+    .text-gradient-primary {
+      background: linear-gradient(135deg, #1032cf 0%, #314be3 100%) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+  </style>
+  <style>
+    /* ===== COMPREHENSIVE LIGHT MODE OVERRIDES ===== */
+
+    /* Body & HTML base */
+    body {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+      color-scheme: light;
+    }
+
+    /* All text-white -> dark in light mode */
+    .text-white {
+      color: #0f172a !important;
+    }
+
+    /* text-on-surface-variant -> visible gray */
+    .text-on-surface-variant,
+    .text-\[\#C5C5D8\],
+    .text-\[\#e2e2e8\],
+    .text-on-surface-variant\/60 {
+      color: #0f172a !important;
+      font-weight: 700 !important;
+    }
+
+    /* text-on-surface */
+    .text-on-surface {
+      color: #0f172a !important;
+    }
+
+    /* All Slate text -> Solid Black-Slate 900 */
+    .text-slate-500,
+    .text-slate-600,
+    .text-slate-700 {
+      color: #0f172a !important;
+      font-weight: 700 !important;
+    }
+
+    .placeholder\:text-slate-700::placeholder,
+    .placeholder\:text-slate-600::placeholder,
+    .placeholder\:text-slate-400::placeholder {
+      color: #64748b !important;
+    }
+
+    /* text-gradient-primary - make it pop on light */
+    .text-gradient-primary {
+      background: linear-gradient(135deg, #1032cf 0%, #314be3 100%) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+
+    /* ===== PROTECT WHITE TEXT ON COLORED BACKGROUNDS ===== */
+    .bg-gradient-to-r.text-white,
+    .bg-gradient-to-br.text-white,
+    [class*="from-primary-container"].text-white,
+    [class*="from-primary-container"] .text-white,
+    [class*="bg-primary-container"].text-white,
+    [class*="bg-primary-container"] .text-white,
+    [class*="bg-gradient-to-r"] .text-white,
+    [class*="bg-gradient-to-br"] .text-white,
+    [class*="bg-gradient-to-tr"] .text-white,
+    [class*="from-primary"].text-white,
+    [class*="from-primary"] .text-white,
+    [class*="bg-\[\#1032CF\]"].text-white,
+    [class*="bg-\[\#314be3\]"].text-white,
+    [class*="to-\[\#314be3\]"].text-white,
+    [class*="to-\[\#314be3\]"] .text-white,
+    .bg-red-500 .text-white,
+    .bg-green-500 .text-white {
+      color: #ffffff !important;
+    }
+
+    /* ===== BACKGROUND OVERRIDES ===== */
+
+    /* Main dark backgrounds -> light */
+    .bg-\[\#111318\],
+    .bg-\[\#111318\]\/80,
+    .bg-\[\#111318\]\/50 {
+      background-color: #f8fafc !important;
+    }
+
+    /* Surface containers */
+    .bg-surface-container {
+      background-color: #f1f5f9 !important;
+    }
+
+    .bg-surface-container-low {
+      background-color: #f8fafc !important;
+    }
+
+    .bg-surface-container-lowest,
+    .bg-surface-container-lowest\/80,
+    .bg-surface-container-lowest\/30,
+    .bg-surface-container-lowest\/40 {
+      background-color: #ffffff !important;
+    }
+
+    .bg-surface-container-high {
+      background-color: #e2e8f0 !important;
+    }
+
+    .bg-surface-container-highest {
+      background-color: #cbd5e1 !important;
+    }
+
+    .bg-surface {
+      background-color: #f8fafc !important;
+    }
+
+    .bg-background {
+      background-color: #f8fafc !important;
+    }
+
+    .bg-background\/40 {
+      background-color: rgba(248, 250, 252, 0.4) !important;
+    }
+
+    .bg-surface-container-low\/50 {
+      background-color: rgba(248, 250, 252, 0.5) !important;
+    }
+
+    /* White overlays -> subtle dark overlays */
+    .bg-white\/5 {
+      background-color: rgba(0, 0, 0, 0.03) !important;
+    }
+
+    .bg-white\/10 {
+      background-color: rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .hover\:bg-white\/5:hover {
+      background-color: rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .hover\:bg-white\/10:hover {
+      background-color: rgba(0, 0, 0, 0.08) !important;
+    }
+
+    /* Glass cards & panels */
+    .glass-card,
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.75) !important;
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06) !important;
+      color: #0f172a !important;
+    }
+
+    /* ===== BORDER OVERRIDES ===== */
+    .border-white\/5,
+    .border-white\/10 {
+      border-color: rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .border-outline-variant\/10,
+    .border-outline-variant\/15,
+    .border-outline-variant\/20 {
+      border-color: #e2e8f0 !important;
+    }
+
+    /* ===== INPUT FIELDS ===== */
+    input,
+    textarea,
+    select {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #e2e8f0 !important;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #94a3b8 !important;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #1032cf !important;
+    }
+
+    option {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar-active {
+      background: linear-gradient(90deg, rgba(16, 50, 207, 0.08) 0%, transparent 100%) !important;
+      border-left-color: #1032cf !important;
+    }
+
+    /* ===== HERO GRADIENT ===== */
+    .hero-gradient {
+      background: radial-gradient(circle at 50% 0%, rgba(16, 50, 207, 0.06) 0%, rgba(248, 250, 252, 0) 75%) !important;
+    }
+
+    /* ===== TABLE BORDERS ===== */
+    table th,
+    table td {
+      border-color: #e2e8f0 !important;
+    }
+
+    /* ===== HOVER STATES ===== */
+    .hover\:text-white:hover {
+      color: #0f172a !important;
+    }
+
+    .glow-card-primary:hover {
+      box-shadow: 0 0 40px -10px rgba(16, 50, 207, 0.15) !important;
+    }
+
+    /* ===== SHADOW OVERRIDES ===== */
+    .shadow-\[0px_24px_48px_-12px_rgba\(0\,0\,0\,0\.5\)\] {
+      box-shadow: 0px 4px 16px -4px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .shadow-\[0px_48px_80px_-16px_rgba\(0\,0\,0\,0\.6\)\] {
+      box-shadow: 0px 12px 32px -8px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* ===== BACKDROP / NAV BAR ===== */
+    .bg-background\/80 {
+      background-color: rgba(248, 250, 252, 0.85) !important;
+    }
+
+    /* ===== SCROLLBAR (optional) ===== */
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+    }
+
+    /* ===== DECORATIVE GLOW BLOBS ===== */
+    .bg-primary-container\/10,
+    .bg-secondary-container\/10,
+    .bg-primary-container\/20,
+    .bg-secondary-container\/20,
+    .bg-secondary-container\/5 {
+      opacity: 0.3;
+    }
+
+    /* ===== MISC FIXES ===== */
+    .text-\[\#e2e2e8\] {
+      color: #0f172a !important;
+    }
+
+    .bg-surface-variant\/60 {
+      background-color: rgba(226, 232, 240, 0.6) !important;
+    }
+
+    /* Selection color in light mode */
+    .selection\:text-white ::selection {
+      color: #ffffff;
+    }
+
+    /* Progress bars background */
+    .bg-surface-container-highest\/30,
+    .bg-on-surface\/5 {
+      background-color: rgba(0, 0, 0, 0.05) !important;
+    }
+  </style>
 </head>
+
 <body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-white">
-<!-- SideNavBar -->
-<aside class="fixed left-0 top-0 h-full flex flex-col p-6 bg-surface-container-lowest/80 backdrop-blur-3xl w-72 border-r border-white/5 z-50">
-    <div class="mb-12 px-2">
-        <h1 class="text-2xl font-black tracking-tighter text-white font-headline">LearnX AI</h1>
-        <p class="text-[10px] uppercase tracking-[0.3em] text-primary font-black mt-1">Faculty Hub</p>
+  <!-- SideNavBar -->
+  <aside
+    class="fixed left-0 top-0 h-full flex flex-col p-6 bg-surface-container-lowest/80 backdrop-blur-3xl w-72 border-r border-white/5 z-50">
+    <div class="mb-12 px-2 flex items-center gap-3">
+      <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+        <span class="material-symbols-outlined text-white text-2xl">school</span>
+      </div>
+      <div>
+        <h1 class="text-2xl font-black tracking-tighter text-slate-800 font-headline leading-none">LearnX</h1>
+        <p class="text-[10px] uppercase tracking-[0.2em] font-black mt-1 text-primary">Faculty Hub</p>
+      </div>
     </div>
     <nav class="flex-1 space-y-3">
-        <!-- Active Link -->
-        <a class="flex items-center gap-4 px-4 py-3 text-white sidebar-active rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
-            <span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">add_circle</span>
-            <span>Creation Hub</span>
-        </a>
-        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
-            <span class="material-symbols-outlined text-xl">folder</span>
-            <span>My Materials</span>
-        </a>
-        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
-            <span class="material-symbols-outlined text-xl">quiz</span>
-            <span>Quiz Library</span>
-        </a>
-        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
-            <span class="material-symbols-outlined text-xl">group</span>
-            <span>Students</span>
-        </a>
-        <a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant/60 hover:text-white hover:bg-white/5 rounded-lg font-headline text-sm font-bold tracking-tight transition-all duration-300" href="#">
-            <span class="material-symbols-outlined text-xl">insights</span>
-            <span>Analytics</span>
-        </a>
+      <!-- Active Link -->
+      <a class="flex items-center gap-4 px-4 py-3 text-primary sidebar-active rounded-lg font-headline text-sm font-black tracking-tight transition-all duration-300"
+        href="#">
+        <span class="material-symbols-outlined text-primary text-xl"
+          style="font-variation-settings: 'FILL' 1;">add_circle</span>
+        <span>Creation Hub</span>
+      </a>
+      <a class="flex items-center gap-4 px-4 py-3 text-slate-600 hover:text-primary transition-all duration-300"
+        href="#">
+        <span class="material-symbols-outlined text-xl">folder</span>
+        <span>Documents</span>
+      </a>
+      <a class="flex items-center gap-4 px-4 py-3 text-slate-600 hover:text-primary transition-all duration-300"
+        href="#">
+        <span class="material-symbols-outlined text-xl">quiz</span>
+        <span>Quizzes</span>
+      </a>
+      <a class="flex items-center gap-4 px-4 py-3 text-slate-600 hover:text-primary transition-all duration-300"
+        href="#">
+        <span class="material-symbols-outlined text-xl">group</span>
+        <span>Students</span>
+      </a>
+      <a class="flex items-center gap-4 px-4 py-3 text-slate-600 hover:text-primary transition-all duration-300"
+        href="#">
+        <span class="material-symbols-outlined text-xl">insights</span>
+        <span>Analytics</span>
+      </a>
     </nav>
-    <div class="mt-auto pt-8 border-t border-white/5 space-y-4">
-        <a class="flex items-center gap-4 px-4 py-2 text-on-surface-variant/60 hover:text-white font-headline text-xs font-bold transition-all" href="#">
-            <span class="material-symbols-outlined text-xl">logout</span>
-            <span>Logout</span>
-        </a>
-        <div class="flex items-center gap-4 glass-card p-4 rounded-xl">
-            <img alt="Faculty Avatar" class="w-10 h-10 rounded-lg border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhVEW8dmm0a7qD_y1coprL-wajME49GmZByb1-STIk9bOGGY9eUh4LYfT9_ojlXhXHVry6NSiUWflR5LwlBLcWr4a9sJgGw9KUzNQWGv3X4orBvupZa0cYbSmk5DWdBpQqU2RQ99aNIx8I_920upaJPmmk5MIG8Zbu9UErNCzl9s8Q2wETudsQ2hOmtF8B1cMEdpscx8pazFFzXzRbh9o6zgsFae1BsffvVHDdfd--_ics58BvZTIfXS38gyYeIFKQQBL9shXOV_w"/>
-            <div class="overflow-hidden">
-                <p class="text-xs font-black text-white truncate uppercase tracking-tighter">Dr. Sarah Jenkins</p>
-                <div class="flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-                    <p class="text-[9px] font-black text-primary uppercase tracking-widest">Faculty Access</p>
-                </div>
+    <div class="mt-auto pt-8 border-t border-slate-100 space-y-4">
+      <a class="flex items-center gap-4 px-4 py-2 text-slate-600 hover:text-error font-headline text-xs font-bold transition-all"
+        href="#">
+        <span class="material-symbols-outlined text-xl">logout</span>
+        <span>Logout</span>
+      </a>
+      <div class="flex items-center gap-4 glass-card p-4 rounded-xl">
+        <img alt="Faculty" class="w-10 h-10 rounded-lg border border-slate-100"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhVEW8dmm0a7qD_y1coprL-wajME49GmZByb1-STIk9bOGGY9eUh4LYfT9_ojlXhXHVry6NSiUWflR5LwlBLcWr4a9sJgGw9KUzNQWGv3X4orBvupZa0cYbSmk5DWdBpQqU2RQ99aNIx8I_920upaJPmmk5MIG8Zbu9UErNCzl9s8Q2wETudsQ2hOmtF8B1cMEdpscx8pazFFzXzRbh9o6zgsFae1BsffvVHDdfd--_ics58BvZTIfXS38gyYeIFKQQBL9shXOV_w" />
+        <div class="overflow-hidden">
+          <p class="text-xs font-black text-slate-800 truncate uppercase tracking-tighter">Dr. Sarah</p>
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+            <p class="text-[9px] font-black text-primary uppercase tracking-widest">Faculty</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <!-- TopNavBar -->
+  <header
+    class="fixed top-0 right-0 left-72 h-20 bg-white/80 backdrop-blur-2xl flex items-center justify-between px-8 z-40 border-b border-slate-100">
+    <div class="flex items-center gap-4">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <span class="material-symbols-outlined text-white text-lg">school</span>
+      </div>
+      <h2 class="text-xl font-black tracking-tighter text-slate-800 font-headline">Creation Hub</h2>
+    </div>
+    <div class="flex items-center gap-6">
+      <div class="relative group">
+        <span
+          class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">
+          <span class="material-symbols-outlined text-xl" data-icon="search">search</span>
+        </span>
+        <input
+          class="bg-slate-50 border border-slate-100 rounded-full py-2 pl-10 pr-4 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all font-bold text-slate-800 placeholder:text-slate-400"
+          placeholder="Search resources..." type="text" />
+      </div>
+      <div class="flex items-center gap-3 border-l border-slate-100 pl-6">
+        <button class="p-2 hover:bg-slate-50 rounded-full transition-colors relative">
+          <span class="material-symbols-outlined text-slate-600" data-icon="notifications">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+        </button>
+        <div class="flex items-center gap-3 cursor-pointer group">
+          <img alt="Faculty"
+            class="w-10 h-10 rounded-full border-2 border-slate-100 group-hover:border-primary transition-all"
+            data-alt="Close-up portrait of a professional academic faculty member in a modern minimal office environment with soft cinematic lighting"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhVEW8dmm0a7qD_y1coprL-wajME49GmZByb1-STIk9bOGGY9eUh4LYfT9_ojlXhXHVry6NSiUWflR5LwlBLcWr4a9sJgGw9KUzNQWGv3X4orBvupZa0cYbSmk5DWdBpQqU2RQ99aNIx8I_920upaJPmmk5MIG8Zbu9UErNCzl9s8Q2wETudsQ2hOmtF8B1cMEdpscx8pazFFzXzRbh9o6zgsFae1BsffvVHDdfd--_ics58BvZTIfXS38gyYeIFKQQBL9shXOV_w" />
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Main Content Canvas -->
+  <main class="ml-72 pt-32 pb-12 px-10 min-h-screen">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left Column: Study Material Upload -->
+      <section class="lg:col-span-5 space-y-10 reveal">
+        <div class="flex flex-col gap-2 mb-4">
+          <div
+            class="inline-block px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-2 w-fit">
+            Create & Share</div>
+          <h3 class="text-4xl font-black font-headline tracking-tighter text-slate-800">Content <span
+              class="text-gradient-primary">Hub</span></h3>
+          <p class="text-slate-500 text-lg font-medium">Turn your notes into smart lessons for your students.</p>
+        </div>
+        <!-- Upload Card -->
+        <div class="glass-card rounded-2xl p-10 border-slate-100 relative group overflow-hidden glow-card-primary">
+          <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 blur-[80px] rounded-full"></div>
+          <form class="space-y-8 relative z-10">
+            <div class="space-y-3">
+              <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Lesson Name</label>
+              <input
+                class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-slate-800 font-bold focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-slate-400 tracking-tight"
+                placeholder="e.g. Introduction to Physics" type="text" />
             </div>
-        </div>
-    </div>
-</aside>
-<!-- TopNavBar -->
-<header class="fixed top-0 right-0 left-64 h-20 bg-[#111318]/40 backdrop-blur-3xl flex items-center justify-between px-8 z-40">
-<div class="flex items-center gap-4">
-<h2 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#1032CF] to-[#CA04B7] font-['Manrope']">Creation Hub</h2>
-</div>
-<div class="flex items-center gap-6">
-<div class="relative group">
-<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-tertiary transition-colors">
-<span class="material-symbols-outlined text-xl" data-icon="search">search</span>
-</span>
-<input class="bg-surface-container-highest rounded-full py-2 pl-10 pr-4 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-tertiary/20 transition-all border-none" placeholder="Search resources..." type="text"/>
-</div>
-<div class="flex items-center gap-3 border-l border-outline-variant/30 pl-6">
-<button class="p-2 hover:bg-white/5 rounded-full transition-colors relative">
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
-<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
-</button>
-<div class="flex items-center gap-3 cursor-pointer group">
-<img alt="Faculty Profile Avatar" class="w-10 h-10 rounded-full border-2 border-primary-container/30 group-hover:border-primary-container transition-all" data-alt="Close-up portrait of a professional academic faculty member in a modern minimal office environment with soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhVEW8dmm0a7qD_y1coprL-wajME49GmZByb1-STIk9bOGGY9eUh4LYfT9_ojlXhXHVry6NSiUWflR5LwlBLcWr4a9sJgGw9KUzNQWGv3X4orBvupZa0cYbSmk5DWdBpQqU2RQ99aNIx8I_920upaJPmmk5MIG8Zbu9UErNCzl9s8Q2wETudsQ2hOmtF8B1cMEdpscx8pazFFzXzRbh9o6zgsFae1BsffvVHDdfd--_ics58BvZTIfXS38gyYeIFKQQBL9shXOV_w"/>
-</div>
-</div>
-</div>
-</header>
-<!-- Main Content Canvas -->
-<main class="ml-72 pt-32 pb-12 px-10 min-h-screen">
-<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-<!-- Left Column: Study Material Upload -->
-<section class="lg:col-span-5 space-y-10 reveal">
-    <div class="flex flex-col gap-2 mb-4">
-        <div class="inline-block px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-2 w-fit">Material Architecture</div>
-        <h3 class="text-4xl font-black font-headline tracking-tighter text-white">Content <span class="text-gradient-primary">Nexus</span></h3>
-        <p class="text-on-surface-variant text-lg font-medium opacity-70">Transcribe module assets into structured intelligence.</p>
-    </div>
-<!-- Upload Card -->
-<div class="glass-card rounded-2xl p-10 border-white/5 relative group overflow-hidden glow-card-primary">
-    <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 blur-[80px] rounded-full"></div>
-    <form class="space-y-8 relative z-10">
-        <div class="space-y-3">
-            <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest ml-1 opacity-60">Asset Title</label>
-            <input class="w-full bg-surface-container-highest/20 border border-white/5 rounded-xl p-4 text-on-surface font-black focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-slate-600 tracking-tight" placeholder="e.g. Advanced Quantum Mechanics" type="text"/>
-        </div>
-        <div class="space-y-3">
-            <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest ml-1 opacity-60">Module Category</label>
-            <select class="w-full bg-surface-container-highest/20 border border-white/5 rounded-xl p-4 text-on-surface font-black focus:ring-2 focus:ring-primary/20 transition-all appearance-none cursor-pointer">
-                <option>Physics & Mathematics</option>
-                <option>Computer Science</option>
-                <option>Bio-Engineering</option>
-                <option>Digital Economics</option>
-            </select>
-        </div>
-        <div class="space-y-3">
-            <label class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest ml-1 opacity-60">Resource Repository</label>
-            <div class="border-2 border-dashed border-white/5 rounded-2xl p-12 flex flex-col items-center justify-center gap-4 hover:border-primary/40 transition-all bg-white/2 cursor-pointer group/upload hover:bg-white/5">
-                <div class="w-16 h-16 rounded-2xl bg-surface-container-highest flex items-center justify-center group-hover/upload:scale-110 transition-transform border border-white/5 shadow-xl">
-                    <span class="material-symbols-outlined text-3xl text-primary" data-icon="cloud_upload">cloud_upload</span>
+            <div class="space-y-3">
+              <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Subject Area</label>
+              <select
+                class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-slate-800 font-bold focus:ring-2 focus:ring-primary/20 transition-all appearance-none cursor-pointer">
+                <option>Science & Math</option>
+                <option>Technology</option>
+                <option>Engineering</option>
+                <option>Economics</option>
+              </select>
+            </div>
+            <div class="space-y-3">
+              <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Upload Your
+                Files</label>
+              <div
+                class="border-2 border-dashed border-slate-200 rounded-2xl p-12 flex flex-col items-center justify-center gap-4 hover:border-primary/40 transition-all bg-slate-50/50 cursor-pointer group/upload hover:bg-slate-50">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center group-hover/upload:scale-110 transition-transform border border-slate-100 shadow-xl">
+                  <span class="material-symbols-outlined text-3xl text-primary"
+                    data-icon="cloud_upload">cloud_upload</span>
                 </div>
                 <div class="text-center">
-                    <p class="text-on-surface font-black text-sm">Upload Intelligence Assets</p>
-                    <p class="text-on-surface-variant text-[10px] mt-1 font-bold uppercase tracking-wider opacity-60">PDF, MP4, or TXT (Max 5G)</p>
+                  <p class="text-slate-800 font-black text-sm">Drop your materials here</p>
+                  <p class="text-slate-400 text-[10px] mt-1 font-bold uppercase tracking-wider">PDF, Video, or Text</p>
                 </div>
+              </div>
             </div>
+            <button
+              class="w-full py-5 bg-primary rounded-xl text-white font-black text-sm uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-primary/20">
+              Create Lesson
+            </button>
+          </form>
         </div>
-        <button class="w-full py-5 bg-gradient-to-r from-primary-container to-secondary-container rounded-xl text-white font-black text-sm uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-primary/20">
-            Initialize Processing
-        </button>
-    </form>
-</div>
-<!-- Recent Activity/Status -->
-<div class="glass-card rounded-lg p-6 flex items-center gap-4">
-<div class="w-12 h-12 rounded-full border-2 border-tertiary flex items-center justify-center">
-<span class="material-symbols-outlined text-tertiary" data-icon="auto_awesome">auto_awesome</span>
-</div>
-<div>
-<p class="text-white font-bold">AI Analysis Active</p>
-<p class="text-on-surface-variant text-xs">Generating study nodes from 4 files...</p>
-</div>
-<div class="ml-auto">
-<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
-<div class="h-full w-2/3 bg-tertiary"></div>
-</div>
-</div>
-</div>
-</section>
-<!-- Right Column: Quiz Builder -->
-<section class="lg:col-span-7 space-y-10 reveal" style="transition-delay: 200ms;">
-    <div class="flex justify-between items-end mb-4">
-        <div class="flex flex-col gap-2">
-            <div class="inline-block px-3 py-1 bg-tertiary/10 border border-tertiary/20 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-tertiary mb-2 w-fit">Assessment Logic</div>
-            <h3 class="text-4xl font-black font-headline tracking-tighter text-white">Assessment <span class="text-gradient-primary">Architect</span></h3>
-            <p class="text-on-surface-variant text-lg font-medium opacity-70">Design multi-vector knowledge checkpoints.</p>
+        <!-- Recent Activity/Status -->
+        <div class="glass-card rounded-lg p-6 flex items-center gap-4 border-slate-100">
+          <div class="w-12 h-12 rounded-full border-2 border-tertiary flex items-center justify-center bg-tertiary/5">
+            <span class="material-symbols-outlined text-tertiary" data-icon="auto_awesome">auto_awesome</span>
+          </div>
+          <div>
+            <p class="text-slate-800 font-bold leading-none mb-1">AI is analyzing...</p>
+            <p class="text-slate-400 text-xs font-medium">Turning 4 files into lessons</p>
+          </div>
+          <div class="ml-auto">
+            <div class="w-24 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full w-2/3 bg-tertiary"></div>
+            </div>
+          </div>
         </div>
-        <div class="flex gap-4">
-            <button class="px-6 py-3 glass-card rounded-xl text-white font-black text-xs uppercase tracking-widest">Drafts</button>
-            <button class="px-6 py-3 bg-tertiary text-on-tertiary rounded-xl font-black text-xs uppercase tracking-widest shadow-lg shadow-tertiary/20 hover:scale-[1.02] transition-all">Auto-Gen</button>
+      </section>
+      <!-- Right Column: Quiz Builder -->
+      <section class="lg:col-span-7 space-y-10 reveal" style="transition-delay: 200ms;">
+        <div class="flex justify-between items-end mb-4">
+          <div class="flex flex-col gap-2">
+            <div
+              class="inline-block px-3 py-1 bg-tertiary/10 border border-tertiary/20 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-tertiary mb-2 w-fit">
+              Quiz Settings</div>
+            <h3 class="text-4xl font-black font-headline tracking-tighter text-slate-800">Quiz <span
+                class="text-gradient-primary">Creator</span></h3>
+            <p class="text-slate-500 text-lg font-medium">Make interactive quizzes for your students.</p>
+          </div>
+          <div class="flex gap-4">
+            <button
+              class="px-6 py-3 bg-slate-100 rounded-xl text-slate-600 font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">Drafts</button>
+            <button
+              class="px-6 py-3 bg-tertiary text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-lg shadow-tertiary/20 hover:scale-[1.02] transition-all">Auto-Gen</button>
+          </div>
         </div>
+        <!-- Question Form Scrollable Area -->
+        <div class="space-y-6">
+          <!-- Question Item 1 -->
+          <div class="glass-card rounded-xl p-8 border-slate-100 relative">
+            <div class="flex justify-between items-start mb-6">
+              <div class="flex items-center gap-3">
+                <span
+                  class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-black text-xs">01</span>
+                <h4 class="text-slate-800 font-extrabold text-lg">Main Question</h4>
+              </div>
+              <button class="text-slate-400 hover:text-error transition-colors">
+                <span class="material-symbols-outlined" data-icon="delete_outline">delete_outline</span>
+              </button>
+            </div>
+            <div class="space-y-6">
+              <div class="space-y-2">
+                <textarea
+                  class="w-full bg-slate-50 border border-slate-100 rounded-xl p-4 text-slate-800 focus:ring-2 focus:ring-primary/20 transition-all font-bold min-h-[100px] resize-none placeholder:text-slate-300"
+                  placeholder="Type your question here..."></textarea>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Option A -->
+                <div
+                  class="flex items-center gap-3 bg-slate-50 p-4 rounded-xl group focus-within:bg-slate-100 border border-slate-100 transition-all">
+                  <input
+                    class="w-5 h-5 bg-transparent border-slate-300 text-primary focus:ring-offset-background checked:bg-primary"
+                    name="correct_01" type="radio" />
+                  <input class="flex-1 bg-transparent border-none p-0 text-sm focus:ring-0 text-slate-800 font-bold"
+                    placeholder="First Answer" type="text" />
+                </div>
+                <!-- Option B -->
+                <div
+                  class="flex items-center gap-3 bg-slate-50 p-4 rounded-xl group focus-within:bg-slate-100 border border-slate-100 transition-all">
+                  <input
+                    class="w-5 h-5 bg-transparent border-slate-300 text-primary focus:ring-offset-background checked:bg-primary"
+                    name="correct_01" type="radio" />
+                  <input class="flex-1 bg-transparent border-none p-0 text-sm focus:ring-0 text-slate-800 font-bold"
+                    placeholder="Second Answer" type="text" />
+                </div>
+                <!-- Option C -->
+                <div
+                  class="flex items-center gap-3 bg-slate-50 p-4 rounded-xl group focus-within:bg-slate-100 border border-slate-100 transition-all">
+                  <input
+                    class="w-5 h-5 bg-transparent border-slate-300 text-primary focus:ring-offset-background checked:bg-primary"
+                    name="correct_01" type="radio" />
+                  <input class="flex-1 bg-transparent border-none p-0 text-sm focus:ring-0 text-slate-800 font-bold"
+                    placeholder="Third Answer" type="text" />
+                </div>
+                <!-- Option D -->
+                <div
+                  class="flex items-center gap-3 bg-tertiary/5 p-4 rounded-xl group focus-within:bg-tertiary/10 border border-tertiary/30 transition-all">
+                  <input checked=""
+                    class="w-5 h-5 bg-transparent border-tertiary text-tertiary focus:ring-offset-background checked:bg-tertiary"
+                    name="correct_01" type="radio" />
+                  <input class="flex-1 bg-transparent border-none p-0 text-sm focus:ring-0 text-slate-800 font-bold"
+                    type="text" value="Correct Answer" />
+                  <span class="material-symbols-outlined text-tertiary text-sm"
+                    data-icon="check_circle">check_circle</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Question Item 2 (Compact State) -->
+          <div class="glass-card rounded-lg p-6 opacity-60 border-none hover:opacity-100 transition-opacity">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <span
+                  class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-sm">02</span>
+                <p class="text-on-surface-variant font-medium">Click to define the next assessment node...</p>
+              </div>
+              <span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+            </div>
+          </div>
+          <!-- Add New Question Action -->
+          <button
+            class="w-full py-8 rounded-lg border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center gap-3 hover:bg-white/5 transition-all group">
+            <div
+              class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-container group-hover:text-white transition-all">
+              <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+            </div>
+            <span class="text-on-surface-variant font-bold uppercase tracking-widest text-xs">Append Question</span>
+          </button>
+        </div>
+        <!-- Summary & Finalize -->
+        <div class="flex items-center justify-between p-8 bg-slate-50 rounded-2xl border border-slate-100">
+          <div class="flex gap-8">
+            <div>
+              <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest">Questions</p>
+              <p class="text-2xl font-black text-slate-800">01</p>
+            </div>
+            <div>
+              <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest">Difficulty</p>
+              <div class="flex gap-1 mt-2">
+                <div class="w-4 h-1.5 rounded-full bg-tertiary"></div>
+                <div class="w-4 h-1.5 rounded-full bg-tertiary"></div>
+                <div class="w-4 h-1.5 rounded-full bg-slate-200"></div>
+              </div>
+            </div>
+            <div>
+              <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest">Time Estimate</p>
+              <p class="text-lg font-black text-slate-800">~4 mins</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <button
+              class="px-8 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all">Save
+              Draft</button>
+            <button
+              class="px-8 py-3 rounded-xl bg-primary text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all">Publish
+              Quiz</button>
+          </div>
+        </div>
+      </section>
     </div>
-<!-- Question Form Scrollable Area -->
-<div class="space-y-6">
-<!-- Question Item 1 -->
-<div class="glass-card rounded-lg p-8 border-none relative">
-<div class="flex justify-between items-start mb-6">
-<div class="flex items-center gap-3">
-<span class="w-8 h-8 rounded-full bg-primary-container text-white flex items-center justify-center font-bold text-sm">01</span>
-<h4 class="text-on-surface font-bold">Foundation Question</h4>
-</div>
-<button class="text-on-surface-variant hover:text-error transition-colors">
-<span class="material-symbols-outlined" data-icon="delete_outline">delete_outline</span>
-</button>
-</div>
-<div class="space-y-6">
-<div class="space-y-2">
-<textarea class="w-full bg-surface-container-highest/30 border-none rounded-lg p-4 text-on-surface focus:ring-2 focus:ring-primary/20 transition-all font-medium min-h-[100px] resize-none" placeholder="Describe the core inquiry of this question..."></textarea>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<!-- Option A -->
-<div class="flex items-center gap-3 bg-surface-container-low p-4 rounded-lg group focus-within:bg-surface-container-highest transition-all">
-<input class="w-5 h-5 bg-transparent border-outline-variant text-primary focus:ring-offset-background checked:bg-primary" name="correct_01" type="radio"/>
-<input class="flex-1 bg-transparent border-none p-0 text-sm focus:ring-0 text-on-surface" placeholder="Option Alpha" type="text"/>
-</div>
-<!-- Option B -->
-<div class="flex items-center gap-3 bg-surface-container-low p-4 rounded-lg group focus-within:bg-surface-container-highest transition-all">
-<input class="w-5 h-5 bg-transparent border-outline-variant text-primary focus:ring-offset-background checked:bg-primary" name="correct_01" type="radio"/>
-<input class="flex-1 bg-transparent border-none p-0 text-sm focus:ring-0 text-on-surface" placeholder="Option Beta" type="text"/>
-</div>
-<!-- Option C -->
-<div class="flex items-center gap-3 bg-surface-container-low p-4 rounded-lg group focus-within:bg-surface-container-highest transition-all">
-<input class="w-5 h-5 bg-transparent border-outline-variant text-primary focus:ring-offset-background checked:bg-primary" name="correct_01" type="radio"/>
-<input class="flex-1 bg-transparent border-none p-0 text-sm focus:ring-0 text-on-surface" placeholder="Option Gamma" type="text"/>
-</div>
-<!-- Option D -->
-<div class="flex items-center gap-3 bg-surface-container-low p-4 rounded-lg group focus-within:bg-surface-container-highest transition-all border border-tertiary/30 bg-tertiary/5">
-<input checked="" class="w-5 h-5 bg-transparent border-tertiary text-tertiary focus:ring-offset-background checked:bg-tertiary" name="correct_01" type="radio"/>
-<input class="flex-1 bg-transparent border-none p-0 text-sm focus:ring-0 text-on-surface font-semibold" type="text" value="Option Delta"/>
-<span class="material-symbols-outlined text-tertiary text-sm" data-icon="check_circle">check_circle</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Question Item 2 (Compact State) -->
-<div class="glass-card rounded-lg p-6 opacity-60 border-none hover:opacity-100 transition-opacity">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-4">
-<span class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-sm">02</span>
-<p class="text-on-surface-variant font-medium">Click to define the next assessment node...</p>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
-</div>
-</div>
-<!-- Add New Question Action -->
-<button class="w-full py-8 rounded-lg border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center gap-3 hover:bg-white/5 transition-all group">
-<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-container group-hover:text-white transition-all">
-<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
-</div>
-<span class="text-on-surface-variant font-bold uppercase tracking-widest text-xs">Append Question</span>
-</button>
-</div>
-<!-- Summary & Finalize -->
-<div class="flex items-center justify-between p-8 bg-surface-container-low rounded-lg">
-<div class="flex gap-8">
-<div>
-<p class="text-on-surface-variant text-[10px] uppercase font-black tracking-widest">Questions</p>
-<p class="text-2xl font-bold text-white">01</p>
-</div>
-<div>
-<p class="text-on-surface-variant text-[10px] uppercase font-black tracking-widest">Difficulty</p>
-<div class="flex gap-1 mt-1">
-<div class="w-4 h-1.5 rounded-full bg-tertiary"></div>
-<div class="w-4 h-1.5 rounded-full bg-tertiary"></div>
-<div class="w-4 h-1.5 rounded-full bg-surface-container-highest"></div>
-</div>
-</div>
-<div>
-<p class="text-on-surface-variant text-[10px] uppercase font-black tracking-widest">Est. Time</p>
-<p class="text-lg font-bold text-white">~4 mins</p>
-</div>
-</div>
-<div class="flex gap-4">
-<button class="px-8 py-3 rounded-full bg-surface-container-high text-on-surface font-bold hover:bg-surface-container-highest transition-all">Save Draft</button>
-<button class="px-8 py-3 rounded-full bg-gradient-to-r from-[#1032CF] to-[#CA04B7] text-white font-bold shadow-lg hover:scale-105 active:scale-95 transition-all">Publish Quiz</button>
-</div>
-</div>
-</section>
-</div>
-</main>
-<!-- Decorative Background Elements -->
-<div class="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] bg-primary-container/5 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
-<div class="fixed bottom-[-10%] left-[10%] w-[30vw] h-[30vw] bg-secondary-container/5 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
-</body></html>
+  </main>
+  <!-- Decorative Background Elements -->
+  <div
+    class="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] bg-primary-container/5 blur-[120px] rounded-full -z-10 pointer-events-none">
+  </div>
+  <div
+    class="fixed bottom-[-10%] left-[10%] w-[30vw] h-[30vw] bg-secondary-container/5 blur-[120px] rounded-full -z-10 pointer-events-none">
+  </div>
+
+
+  </footer>
+</body>
+
+</html>

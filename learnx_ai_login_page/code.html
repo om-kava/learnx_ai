@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html class="light-mode-active" lang="en">
 
 <head>
   <meta charset="utf-8" />
@@ -18,14 +18,14 @@
       theme: {
         extend: {
           colors: {
-            "primary": "#bbc3ff",
-            "background": "#111318",
-            "surface": "#111318",
-            "on-surface": "#e2e2e8",
-            "primary-container": "#1032cf",
-            "secondary-container": "#ca04b7",
-            "surface-container-lowest": "#0c0e12",
-            "surface-container-low": "#1a1c20",
+            "primary": "var(--mode-primary)",
+            "background": "var(--mode-background)",
+            "surface": "var(--mode-surface)",
+            "on-surface": "var(--mode-on-surface)",
+            "primary-container": "var(--mode-primary-container)",
+            "secondary-container": "var(--mode-secondary-container)",
+            "surface-container-lowest": "var(--mode-surface-container-lowest)",
+            "surface-container-low": "var(--mode-surface-container-low)",
           },
           fontFamily: {
             "headline": ["Manrope"],
@@ -36,193 +36,197 @@
       },
     }
   </script>
-  <style>
-    .glass-card {
-      background: rgba(30, 32, 36, 0.4);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
+    <style>
+        :root {
+            --primary: #1032cf;
+            --primary-dark: #000e5e;
+            --slate-900: #0f172a;
+            --slate-600: #475569;
+            --slate-400: #94a3b8;
+            --slate-200: #e2e8f0;
+            --slate-50: #f8fafc;
+        }
 
-    .text-gradient-primary {
-      background: linear-gradient(135deg, #bbc3ff 0%, #314be3 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        body {
+            background-color: var(--slate-50);
+            color: var(--slate-900);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            font-weight: 700;
+        }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    }
+        .primary-btn-gradient {
+            background: linear-gradient(135deg, #1032cf 0%, #314be3 100%);
+            box-shadow: 0 10px 25px -5px rgba(16, 50, 207, 0.2);
+            border: none;
+            color: #ffffff !important;
+            transition: all 0.3s ease;
+        }
 
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
+        .primary-btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(16, 50, 207, 0.35);
+        }
 
-    @keyframes float {
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid var(--slate-200);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.06);
+            backdrop-filter: blur(20px);
+        }
 
-      0%,
-      100% {
-        transform: translateY(0px);
-      }
+        .text-gradient-primary {
+            background: linear-gradient(135deg, #1032cf 0%, #314be3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-      50% {
-        transform: translateY(-10px);
-      }
-    }
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
 
-    .floating-ui {
-      animation: float 6s ease-in-out infinite;
-    }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    .glow-input:focus {
-      box-shadow: 0 0 20px rgba(16, 50, 207, 0.2);
-      border-color: rgba(16, 50, 207, 0.4) !important;
-    }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
 
-    @keyframes blob-animation {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-      }
+        .floating-ui {
+            animation: float 6s ease-in-out infinite;
+        }
 
-      33% {
-        transform: translate(30px, -50px) scale(1.1);
-      }
+        .glow-input:focus {
+            box-shadow: 0 0 20px rgba(16, 50, 207, 0.1);
+            border-color: var(--primary) !important;
+        }
 
-      66% {
-        transform: translate(-20px, 20px) scale(0.9);
-      }
+        /* Enforce Black Font Rule */
+        h1, h2, h3, h4, h5, h6, b, strong, .font-bold {
+            color: var(--slate-900) !important;
+            font-weight: 900 !important;
+        }
 
-      100% {
-        transform: translate(0px, 0px) scale(1);
-      }
-    }
-
-    .animate-blob {
-      animation: blob-animation 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-    }
-  </style>
+        p, span, div, a, label {
+            color: var(--slate-900);
+            font-weight: 700;
+        }
+    </style>
 </head>
 
-<body class="bg-background text-on-surface font-body selection:bg-primary/20 overflow-hidden">
-  <!-- Immersive Background Support -->
-  <div class="fixed inset-0 z-0 pointer-events-none">
-    <div
-      class="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] rounded-full bg-primary-container/10 blur-[130px] animate-blob">
+<body class="bg-[#f8fafc] text-[#0f172a] font-body selection:bg-primary/20 overflow-hidden">
+    <!-- Decorative Accents -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] rounded-full bg-primary/5 blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-5%] w-[60%] h-[60%] rounded-full bg-primary/5 blur-[120px]"></div>
     </div>
-    <div
-      class="absolute bottom-[-10%] right-[-5%] w-[60%] h-[60%] rounded-full bg-secondary-container/5 blur-[130px] animate-blob"
-      style="animation-delay: -5s"></div>
-  </div>
 
-  <main class="relative z-10 min-h-screen flex flex-col md:flex-row">
-    <!-- Left Side: Immersive Content -->
-    <section
-      class="relative w-full md:w-1/2 min-h-[40vh] md:min-h-screen flex items-center justify-center border-r border-white/5 bg-surface-container-lowest/30 backdrop-blur-sm">
-      <div class="relative z-10 px-12 md:px-24 reveal">
-        <h1 class="text-3xl font-black font-headline tracking-tighter text-white mb-6 floating-ui">LearnX AI</h1>
-        <h2 class="font-headline text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.9] mb-10">
-          Elevate Your <br /><span class="text-gradient-primary">Learning.</span>
-        </h2>
-        <p class="text-on-surface-variant text-xl font-medium leading-relaxed max-w-md opacity-60">
-          Access your personalized academic portal. Master any subject with the power of intelligent study aids.
-        </p>
-        <div class="mt-20 flex items-center gap-6">
-          <div
-            class="px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-primary">
-            Secure Access
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Right Side: User Authentication -->
-    <section class="flex-1 flex items-center justify-center p-8 md:p-24 relative bg-background/40 backdrop-blur-md">
-      <div class="w-full max-w-sm space-y-12">
-        <div class="reveal">
-          <h3 class="text-4xl font-black font-headline text-white tracking-tighter mb-3">Welcome Back</h3>
-          <p class="text-on-surface-variant font-medium text-lg leading-relaxed opacity-60">Please sign in to access
-            your dashboard.</p>
-        </div>
-
-        <form class="space-y-8">
-          <div class="space-y-3 reveal" style="transition-delay: 100ms;">
-            <label
-              class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest ml-1 opacity-50">Email
-              Address</label>
-            <div class="relative group">
-              <span
-                class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 text-xl group-focus-within:text-primary transition-colors">alternate_email</span>
-              <input
-                class="w-full bg-surface-container-low border border-white/5 rounded-2xl py-5 pl-14 pr-6 text-white font-bold focus:ring-1 focus:ring-primary/40 focus:border-primary/40 transition-all duration-300 glow-input placeholder:text-slate-700 text-sm"
-                placeholder="user@learnx.ai" type="email" />
+    <main class="relative z-10 min-h-screen flex flex-col md:flex-row">
+        <!-- Left Side: Welcome Panel -->
+        <section class="relative w-full md:w-5/12 min-h-[30vh] md:min-h-screen flex items-center justify-center border-r border-slate-200 bg-white">
+            <div class="relative z-10 px-8 md:px-16 reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 text-primary font-black text-xs uppercase tracking-widest mb-10">
+                    <span class="material-symbols-outlined text-sm">school</span>
+                    AI Learning Platform
+                </div>
+                <h1 class="text-3xl font-black font-headline tracking-tighter text-slate-900 mb-6 floating-ui">LearnX AI</h1>
+                <h2 class="font-headline text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-[0.9] mb-8">
+                    Master Your <br /><span class="text-gradient-primary">Learning.</span>
+                </h2>
+                <p class="text-slate-600 text-lg font-bold leading-relaxed max-w-sm opacity-80">
+                    Access your smart academic assistant and start your learning journey today.
+                </p>
+                <div class="mt-12 border-t border-slate-100 pt-8">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full primary-btn-gradient flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-sm">verified_user</span>
+                        </div>
+                        <span class="text-xs font-black uppercase tracking-widest text-slate-400">Secure Access</span>
+                    </div>
+                </div>
             </div>
-          </div>
+        </section>
 
-          <div class="space-y-3 reveal" style="transition-delay: 200ms;">
-            <div class="flex justify-between items-center ml-1">
-              <label
-                class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest opacity-50">Password</label>
-              <a class="text-[10px] font-black text-primary uppercase tracking-widest hover:text-white transition-colors"
-                href="#">Forgot Password?</a>
+        <!-- Right Side: Login Panel -->
+        <section class="flex-1 flex items-center justify-center p-6 md:p-20 bg-slate-50 relative">
+            <div class="w-full max-w-sm space-y-10">
+                <div class="reveal">
+                    <h3 class="text-3xl font-black font-headline text-slate-900 tracking-tighter mb-2 uppercase">Welcome Back</h3>
+                    <p class="text-slate-500 font-bold text-base leading-relaxed">Sign in to your account.</p>
+                </div>
+
+                <form class="space-y-6">
+                    <!-- Email Input -->
+                    <div class="space-y-2 reveal" style="transition-delay: 100ms;">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email</label>
+                        <div class="relative group">
+                            <span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-primary transition-colors">email</span>
+                            <input class="w-full bg-white border-2 border-slate-200 rounded-2xl py-4 pl-14 pr-6 text-slate-900 font-black focus:ring-0 focus:border-primary transition-all duration-300 glow-input placeholder:text-slate-200 text-sm"
+                                placeholder="name@email.com" type="email" />
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="space-y-2 reveal" style="transition-delay: 200ms;">
+                        <div class="flex justify-between items-center ml-1">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Password</label>
+                            <a class="text-[10px] font-black text-primary uppercase tracking-widest hover:underline" href="#">Forgot?</a>
+                        </div>
+                        <div class="relative group">
+                            <span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-primary transition-colors">lock</span>
+                            <input class="w-full bg-white border-2 border-slate-200 rounded-2xl py-4 pl-14 pr-6 text-slate-900 font-black focus:ring-0 focus:border-primary transition-all duration-300 glow-input placeholder:text-slate-200 text-sm"
+                                placeholder="••••••••" type="password" />
+                        </div>
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="flex items-center gap-3 ml-1 reveal" style="transition-delay: 300ms;">
+                        <input class="w-5 h-5 rounded-lg border-2 border-slate-200 bg-white text-primary focus:ring-primary" type="checkbox" />
+                        <span class="text-xs font-black text-slate-400">Remember me</span>
+                    </div>
+
+                    <!-- Sign In Button -->
+                    <a class="w-full py-5 primary-btn-gradient rounded-2xl text-white font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 reveal"
+                        href="../learnx_ai_student_dashboard/code.html" style="transition-delay: 400ms;">
+                        Sign In
+                        <span class="material-symbols-outlined font-black">login</span>
+                    </a>
+                </form>
+
+                <!-- Registration Link -->
+                <div class="text-center reveal" style="transition-delay: 500ms;">
+                    <p class="text-xs font-black text-slate-400">
+                        Need an account? 
+                        <a class="text-primary hover:underline ml-1 font-black" href="../learnx_ai_registration_page/code.html">Sign Up</a>
+                    </p>
+                </div>
+
+                <!-- Footer -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center reveal opacity-60" style="transition-delay: 600ms;">
+                    <span class="text-[9px] text-slate-400 font-black uppercase tracking-widest">LearnX AI &copy; 2026</span>
+                    <div class="flex gap-4">
+                        <a class="text-[9px] text-slate-400 font-black uppercase tracking-widest hover:text-primary transition-all" href="#">Support</a>
+                        <a class="text-[9px] text-slate-400 font-black uppercase tracking-widest hover:text-primary transition-all" href="#">Privacy</a>
+                    </div>
+                </div>
             </div>
-            <div class="relative group">
-              <span
-                class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 text-xl group-focus-within:text-primary transition-colors">lock</span>
-              <input
-                class="w-full bg-surface-container-low border border-white/5 rounded-2xl py-5 pl-14 pr-6 text-white font-bold focus:ring-1 focus:ring-primary/40 focus:border-primary/40 transition-all duration-300 glow-input placeholder:text-slate-700 text-sm"
-                placeholder="••••••••" type="password" />
-            </div>
-          </div>
+        </section>
+    </main>
 
-          <div class="flex items-center gap-3 ml-1 reveal" style="transition-delay: 300ms;">
-            <input
-              class="w-5 h-5 rounded-lg border-2 border-white/10 bg-surface-container text-primary focus:ring-offset-background"
-              type="checkbox" />
-            <span class="text-xs font-bold text-on-surface-variant opacity-60">Remember me</span>
-          </div>
-
-          <a class="w-full py-6 bg-gradient-to-r from-primary-container to-[#314be3] rounded-2xl text-white font-black text-sm uppercase tracking-[0.3em] hover:scale-[1.02] hover:shadow-[0_20px_50px_-10px_rgba(16,50,207,0.5)] active:scale-95 transition-all flex items-center justify-center gap-3 reveal"
-            href="../learnx_ai_student_dashboard/code.html" style="transition-delay: 400ms;">
-            Sign In
-            <span class="material-symbols-outlined font-black">bolt</span>
-          </a>
-        </form>
-
-        <div class="text-center reveal" style="transition-delay: 500ms;">
-          <p class="text-xs font-bold text-on-surface-variant opacity-50">
-            New to LearnX AI?
-            <a class="text-primary hover:text-white transition-colors ml-1 font-black"
-              href="../learnx_ai_registration_page/code.html">Create Account</a>
-          </p>
-        </div>
-
-        <div class="pt-12 border-t border-white/5 flex justify-between items-center reveal"
-          style="transition-delay: 600ms;">
-          <span class="text-[9px] text-slate-700 font-black uppercase tracking-widest">LearnX AI Portal v4.0</span>
-          <div class="flex gap-6">
-            <a class="text-[9px] text-slate-700 font-black uppercase tracking-widest hover:text-white transition-colors"
-              href="#">Support</a>
-            <a class="text-[9px] text-slate-700 font-black uppercase tracking-widest hover:text-white transition-colors"
-              href="#">Privacy</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('active');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    });
-  </script>
+    </script>
 </body>
-
 </html>
